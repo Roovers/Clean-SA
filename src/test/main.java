@@ -1,6 +1,11 @@
 package test;
 
 import IU.interfaz;
+import domain.Producto;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.Iterator;
 
 public class main {
 

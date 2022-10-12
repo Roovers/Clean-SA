@@ -27,7 +27,7 @@ public class interfaz {
                 imprimirMenuAdmin();
                 break;
             case 1 :
-                JOptionPane.showMessageDialog(null,"ENCARGADO DE VENTAS");
+                imprimirMenuEncargadoVentas();
                 break;
             case 2 :
                 JOptionPane.showMessageDialog(null,"ENCARGADO DE DEPOSITO");
@@ -60,11 +60,78 @@ public class interfaz {
                 break;
             case 4:
                 editarUnProducto();
+                break;
             default:
                 System.out.println("Se eligio una opcion incorrecta volver a intentar");
                 break;
         }
     }
+
+    public void imprimirMenuEncargadoVentas() {
+        int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B \nPara acceder a la opcion ingrese el numero que corresponda " +
+                                "\n  ➕  1 - Buscar Producto \n  \uD83D\uDD0E  2 - Consultar Inventario  \n  ❌\u200B" +
+                "  3 - Realizar venta \n \uD83D\uDD1A   4 - Ver Stock \n 5 - Generar Ticket \n 6 -Consultar Ventas por Fecha \n 7 - Buscar producto PAR \n 8 - Editar producto PAR ",  "\uD83D\uDD11\u200B Usuario : Encargado de Ventas ", 1));
+
+        switch (opcion) {
+            case 1:
+                buscarProducto();
+                break;
+            case 2:
+                listarProductos();
+                break;
+            case 3:
+                /*venta();*/
+                break;
+            case 4:
+                /* verStockProducto(); */
+                break;
+            case 5:
+                /*generarTicket();*/
+                break;
+            case 6:
+                /*consultarVentasPorFecha();*/
+                break;
+            case 7:
+                /*BuscaPAR();*/
+                break;
+            case 8:
+                /*editarPAR();*/
+                break;
+
+            default:
+                System.out.println("Se eligio una opcion incorrecta volver a intentar");
+                break;
+        }
+    }
+    public void imprimirMenuEmpleadoVentas() {
+        int opcion = Integer.parseInt(JOptionPane.showInputDialog(null, " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B \nPara acceder a la opcion ingrese el numero que corresponda " +
+                "\n  ➕  1 - Buscar Producto \n  \uD83D\uDD0E  2 - Consultar Inventario  \n  ❌\u200B" +
+                "  3 - Realizar venta \n \uD83D\uDD1A   4 - Ver Stock \n 5 - Generar Ticket",  "\uD83D\uDD11\u200B Usuario : Encargado de Ventas ", 1));
+
+        switch (opcion) {
+            case 1:
+                buscarProducto();
+                break;
+            case 2:
+                listarProductos();
+                break;
+            case 3:
+                /*venta();*/
+                break;
+            case 4:
+               /* verStockProducto(); */
+                break;
+            case 5:
+                /*generarTicket();*/
+                break;
+            default:
+                System.out.println("Se eligio una opcion incorrecta volver a intentar");
+                break;
+        }
+    }
+
+
+
 
     private void borrarProducto() {
        // int codigoProducto = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el codigo del Producto a borrar :"));
@@ -138,6 +205,12 @@ public class interfaz {
     public void listarProductos() {
         inventario.listarProductos();
         imprimirMenuAdmin();
+    }
+
+    private void buscarProducto () {
+         int p = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el código del producto"));
+         inventario.buscarProducto(p);
+
     }
 
     public interfaz() {
