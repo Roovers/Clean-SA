@@ -9,6 +9,5 @@ public class main {
 
         interfaz i1 = new interfaz();
 
-
     }
 }

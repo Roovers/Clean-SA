@@ -10,11 +10,23 @@ public class ListaDeUsuarios {
 
     List<Usuario> usuarios = new ArrayList<>();
 
-    public void addUser(Usuario usuario) {
-        usuarios.add(usuario);
+    public boolean addUser(Usuario usuario) {
+        if (usuario.getId() > 0) {
+            char[] arrLetras = usuario.getNombreDeUsuario().toCharArray();
+            if (arrLetras.length >= 1 && arrLetras.length < 20) {
+                arrLetras = usuario.getPassword().toCharArray();
+                if (arrLetras.length > 0 && arrLetras.length <= 20) {
+                    if (usuario.getNivelPermisos() >= 0 && usuario.getNivelPermisos() <= 4) {
+                        usuarios.add(usuario);
+                        return true ;
+                    }
+                }
+            }
+
+        }
+        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
+        return false ;
     }
-
-
 
     public Usuario findByUserName (String nombreUsuario) {
         for (Usuario u : usuarios) {
@@ -67,4 +79,6 @@ public class ListaDeUsuarios {
         JOptionPane.showMessageDialog(null, "contacte a un administrador");
         return 5;
     }
+
+
 }
