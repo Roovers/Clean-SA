@@ -14,10 +14,9 @@ public class ListaDeProductos {
     ArrayList<Producto> inventario = new ArrayList<Producto>();
 
 
-    // Mertodo que agrega productos al inventario.
+    // Método que valida datos para agregar productos al inventario.
     public boolean addProducto(Producto producto) {
         if (producto.getIdProducto() > 0) {
-
             char[] arrLetras = producto.getNombreDeProducto().toCharArray();
             if (arrLetras.length >= 1 && arrLetras.length < 60) {
                 arrLetras = producto.getNivelDeToxi().toCharArray();
@@ -36,22 +35,21 @@ public class ListaDeProductos {
     }
 
 
-    // Mertodo que borra productos del inventario.
+    // Metodo que borra productos del inventario.
     public boolean borrarProducto(Integer idProducto) {
         if (idProducto > 0) {
-            for (Producto p : this.inventario) {
-                if (p.getIdProducto() == idProducto) {
-                    inventario.remove(p);
+            for (Producto producto : this.inventario) {
+                if (producto.getIdProducto() == idProducto) {
+                    inventario.remove(producto);
                     return true;
                 }
             }
-
         }
         return false;
     }
 
 
-    // Mertodo que busca productos en el inventario.
+    // Método que busca productos en el inventario.
     public Producto buscarProducto(Integer idProducto){
         for (Producto p : this.inventario) {
             if (p.getIdProducto() == idProducto) {
@@ -62,28 +60,25 @@ public class ListaDeProductos {
     }
 
 
-    // Mertodo que modifica productos del inventario.
+    // Método que modifica productos del inventario mediante ingreso de datos.
     public void editarProducto(Integer idProducto){
-        for (Producto p : this.inventario) {
-            if (p.getIdProducto() == idProducto) {
-                p.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", p.getNombreDeProducto()));
-                p.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", p.getPrecio())));
-                p.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", p.getDetalle()));
-                p.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", p.getCantidad())));
-                p.setNivelDeToxi(JOptionPane.showInputDialog("Ingresa el nivel de toxicidad // ALTO o BAJO", p.getNivelDeToxi()));
+
+        for (Producto producto : this.inventario) {
+            if (producto.getIdProducto() == idProducto) {
+                producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
+                producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
+                producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
+                producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
+                producto.setNivelDeToxi(JOptionPane.showInputDialog("Ingresa el nivel de toxicidad // ALTO o BAJO", producto.getNivelDeToxi()));
                 JOptionPane.showMessageDialog(null,"Producto editado correctamente");
                 return;
             }
-
         }
         JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
     }
 
 
-    public ArrayList<Producto> getInventario() {
-        return inventario;
-    }
-
+    // Método que imprime datos de productos ( con validación ).
     public void listarProductos () {
         if (inventario.size() > 0) {
             for (Producto p : this.inventario) {
@@ -102,6 +97,8 @@ public class ListaDeProductos {
         }
     }
 
+
+    // Método que imprime datos de productos PAR ( con validación ).
     public void listarProductosPar () {
         if (inventario.size() > 0) {
             for (Producto p : this.inventario) {
@@ -122,29 +119,31 @@ public class ListaDeProductos {
         }
     }
 
-    public void venderUnProducto(Integer idProducto){
-        Producto p = buscarProducto(idProducto);
-        if(p != null) {
-            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad que desea vender del producto " + p.getNombreDeProducto() + "\n" +
-                    "Actualmente hay " + p.getCantidad() + " en stock"));
-            if(cantidad > 0){
 
-                if(cantidad > p.getCantidad()){
+    // Método para vender productos ( con validación ) .
+    public void venderUnProducto(Integer idProducto){
+        Producto producto = buscarProducto(idProducto);
+        if(producto != null) {
+            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad que desea vender del producto " + producto.getNombreDeProducto() + "\n" +
+                    "Actualmente hay " + producto.getCantidad() + " en stock "));
+            if(cantidad > 0){
+                if(cantidad > producto.getCantidad()){
                     JOptionPane.showMessageDialog(null, "Cantidad insuficiente en el inventario!");
                 } else {
-                    p.setCantidad(p.getCantidad() - cantidad);
+                    producto.setCantidad(producto.getCantidad() - cantidad);
                     JOptionPane.showMessageDialog(null, "Producto vendido exitosamente!");
-
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "No puedes vender 0 unidades de un producto!");
+                JOptionPane.showMessageDialog(null, "No podes vender 0 unidades de un producto!");
                 return;
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No puedes vender un producto que no existe en el inventario!");
+            JOptionPane.showMessageDialog(null, "No podes vender un producto que no existe en el inventario!");
         }
     }
 
+
+    // Método para consultar stock de productos .
     public void consultarStock(Integer idProducto){
         Producto p =  buscarProducto(idProducto);
         if(p != null){
@@ -153,6 +152,69 @@ public class ListaDeProductos {
             JOptionPane.showMessageDialog(null,"No existe el producto con id " + idProducto + " en el inventario" );
 
         }
+    }
+
+
+    // Método para vender productos NO PAR ( con validación ) .
+    public void venderUnProductoComun(Integer idProducto){
+        Producto p = buscarProducto(idProducto);
+        if(p != null) {
+            if(!p.getNivelDeToxi().equalsIgnoreCase("alto")) {
+                int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad que desea vender del producto " + p.getNombreDeProducto() + "\n" +
+                        "Actualmente hay " + p.getCantidad() + " en stock"));
+                if (cantidad > 0) {
+                    if (cantidad > p.getCantidad()) {
+                        JOptionPane.showMessageDialog(null, "Cantidad insuficiente en el inventario!");
+                    } else {
+                        p.setCantidad(p.getCantidad() - cantidad);
+                        JOptionPane.showMessageDialog(null, "Producto vendido exitosamente!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puedes vender 0 unidades de un producto!");
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No tienes los permisos necesarios para vender este producto");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No podes vender un producto que no existe en el inventario!");
+        }
+    }
+
+
+    // Método que muestra stock de productos NO PAR en el inventario ( con validación ).
+    public void consultarStockProductoComun(Integer idProducto){
+        Producto p =  buscarProducto(idProducto);
+        if(p != null){
+            if(!p.getNivelDeToxi().equalsIgnoreCase("alto")) {
+                JOptionPane.showMessageDialog(null, "El stock del producto " + p.getNombreDeProducto().toUpperCase() + "  es de " + p.getCantidad() + " Unidades ");
+            } else{
+                JOptionPane.showMessageDialog(null,"No tienes los permisos necesarios para acceder al stock de este producto" );
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"No existe el producto con id " + idProducto + " en el inventario" );
+        }
+    }
+
+    // Método que busca productos NO PAR en el inventario ( con validación ).
+    public void buscarProductoComun(Integer idProducto){
+        for (Producto p : this.inventario) {
+            if (p.getIdProducto() == idProducto && p.getNivelDeToxi().equalsIgnoreCase("bajo")) {
+                JOptionPane.showMessageDialog(null, p);
+                return;
+            }
+            if (p.getIdProducto() == idProducto && p.getNivelDeToxi().equalsIgnoreCase("alto")) {
+                JOptionPane.showMessageDialog(null, "No tienes los permisos necesarios para acceder a la informacion de este producto");
+                return;
+            }
+        }
+        JOptionPane.showMessageDialog(null, "El ID ingresado no correponde a ningun producto en el inventario");
+        return;
+    }
+
+    // constructor
+    public ArrayList<Producto> getInventario() {
+        return inventario;
     }
 }
 

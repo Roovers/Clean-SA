@@ -53,11 +53,11 @@ public abstract class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +
-                "id=" + id +
-                ", nombreDeUsuario='" + nombreDeUsuario + '\'' +
-                ", password='" + password + '\'' +
-                ", nivelPermisos=" + nivelPermisos +
-                '}';
+        return " U S U A R I O  " +
+                "\n-------------------" +
+                "\n ID de Usuario = " + id +
+                " \n Nombre De Usuario = " + nombreDeUsuario +
+                " \n Clave Del Usuario = " + password +
+                ",\n Nivel de Permisos = " + nivelPermisos ;
     }
 }

@@ -7,7 +7,9 @@ public class main {
     public static void main(String[] args) {
 
 
-        interfaz i1 = new interfaz();
+        interfaz pantallaPrincipal = new interfaz();
 
     }
+    
+    
 }

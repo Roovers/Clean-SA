@@ -73,11 +73,11 @@ public class Producto {
     public String toString() {
         return " P R O D U C T O " +
                 "\n-------------------" +
-                "\n Serial De Producto= " + idProducto +
-                ", \n Nombre De Producto=' " + nombreDeProducto + '\'' +
-                ", \n Precio Del Producto= $ " + precio +
-                ", \n Detalle Del Producto=' " + detalle + '\'' +
-                ",\n En stock= " + cantidad + " unidades" +
-                ",\n Nivel De Toxicidad=' " + nivelDeToxi + '\'' ;
+                "\n Serial De Producto = " + idProducto +
+                " \n Nombre De Producto = " + nombreDeProducto +
+                " \n Precio Del Producto = $ " + precio +
+                " \n Detalle Del Producto = " + detalle +
+                "\n En stock = " + cantidad + " unidades" +
+                "\n Nivel De Toxicidad = " + nivelDeToxi  ;
     }
 }
