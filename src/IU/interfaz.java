@@ -34,7 +34,7 @@ public class interfaz {
                 imprimirMenuEmpleadoDeVentas();
                 break;
             case 4:
-                JOptionPane.showMessageDialog(null, "EMPLEADO DE VENTAS");
+                imprimirMenuEmpleadoDeDeposito();
                 break;
         }
     }
@@ -248,6 +248,46 @@ public class interfaz {
         }
     }
 
+    // Método que imprime menú para Empleado de Deposito.
+    public void imprimirMenuEmpleadoDeDeposito() {
+
+        int opcion = Integer.parseInt((String)(JOptionPane.showInputDialog(
+                null,
+                " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B " +
+                        "\nPara acceder a la opcion ingrese el numero que corresponda " + "\n  ➕  1 - Ingresar Producto \n  \uD83D\uDD0E  2 - Consultar Inventario  " +
+                        "\n  \uD83D\uDD04\u200B  3 - Editar un producto \n  \uD83D\uDD0E  4 - Buscar un producto \n  \uD83D\uDD0E  5 - Cerrar Sesion " ,
+                "\uD83D\uDD11\u200B Usuario : EMPLEADO DE DEPÓSITO ",
+                JOptionPane.DEFAULT_OPTION, new ImageIcon(interfaz.class.getResource("/img/encd.png")),
+                null,
+                null)));
+
+        switch (opcion) {
+            case 1:
+                ingresarProducto();
+                imprimirMenuEmpleadoDeDeposito();
+                break;
+            case 2:
+                listarProductos();
+                imprimirMenuEmpleadoDeDeposito();
+                break;
+            case 3:
+                editarProductoNoPar();
+                imprimirMenuEmpleadoDeDeposito();
+                break;
+            case 4:
+                buscarProductoComun();
+                imprimirMenuEmpleadoDeDeposito();
+                break;
+            case 5:
+                loginMenu();
+                break;
+
+            default:
+                System.out.println("Se eligio una opcion incorrecta volver a intentar");
+                break;
+        }
+    }
+
     // Método que toma datos para agregar un producto del inventario.
     private void ingresarProducto() {
         int resp;
@@ -423,65 +463,59 @@ public class interfaz {
 
     // Método que toma datos para borrar un producto del inventario.
     private void borrarProducto() {
-        int codigoProducto = Integer.parseInt((String) JOptionPane.showInputDialog(
-                null, "Ingrese el Codigo del prducto a borrar :",
-                "BORRAR PRODUCTO", JOptionPane.DEFAULT_OPTION,
-                new ImageIcon(interfaz.class.getResource("/img/cod.png")),
-                null,
-                null));
-        if(inventario.buscarProducto(codigoProducto) != null) {
-            int confirm = JOptionPane.showConfirmDialog(
+        int pregunta = 3;
+        do {
+            int codigoProducto = Integer.parseInt((String) JOptionPane.showInputDialog(
+                    null, "Ingrese el Codigo del prducto a borrar :",
+                    "BORRAR PRODUCTO", JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/cod.png")),
                     null,
-                    "¿Estas seguro que deseas borrar este producto?",
-                    "Confirmacion",
-                    JOptionPane.YES_NO_OPTION);
-            if(confirm == 0) {
-                inventario.borrarProducto(codigoProducto);
+                    null));
+            if (inventario.buscarProducto(codigoProducto) != null) {
+                int confirm = JOptionPane.showConfirmDialog(
+                        null,
+                        "¿Estas seguro que deseas borrar este producto?",
+                        "Confirmacion",
+                        JOptionPane.YES_NO_OPTION);
+                if (confirm == 0) {
+                    inventario.borrarProducto(codigoProducto);
+                    JOptionPane.showMessageDialog(
+                            null,
+                            " El producto se elimino correctamente ! ",
+                            "BORRAR PRODUCTO",
+                            JOptionPane.PLAIN_MESSAGE,
+                            new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+
+                }
+            } else {
                 JOptionPane.showMessageDialog(
                         null,
-                        " El producto se elimino correctamente ! ",
-                        "BORRAR PRODUCTO",
-                        JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(interfaz.class.getResource("/img/delete.png")));
-                return;
+                        " ERROR - El código ingresado es erroneo ",
+                        "ERROR", JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
             }
-        }
-        JOptionPane.showMessageDialog(
-                null,
-                " ERROR - El código ingresado es erroneo ",
-                "ERROR", JOptionPane.PLAIN_MESSAGE,
-                new ImageIcon(interfaz.class.getResource("/img/error.png")));
+            pregunta =  JOptionPane.showConfirmDialog(null, "Desea eliminar otro producto??", "ELIMINAR PRODUCTO", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+
+        } while(pregunta == 0);
         imprimirMenuAdmin();
     }
-
+    // Método que toma datos para borrar un usuario del sistema.
     private void borrarUsuario() {
-
-        int idUsuario = Integer.parseInt((String) JOptionPane.showInputDialog(
-                null,
-                "Ingrese el ID del usuario a borrar :",
-                "BORRAR USUARIO",
-                JOptionPane.DEFAULT_OPTION,
-                new ImageIcon(interfaz.class.getResource("/img/cod.png")),
-                null,
-                null));
-        if(usuarios.buscarUsuario(idUsuario) != null) {
-            int confirm = JOptionPane.showConfirmDialog(
+        int pregunta = 3;
+        do {
+            int idUsuario = Integer.parseInt((String) JOptionPane.showInputDialog(
                     null,
-                    "¿Estas seguro que deseas borrar este Usuario?",
-                    "Confirmacion",
-                    JOptionPane.YES_NO_OPTION);
-            if(confirm == 0) {
-                usuarios.borrarUsuario(idUsuario);
-                JOptionPane.showMessageDialog(
-                        null,
-                        " El Usuario se elimino correctamente ! ",
-                        "BORRAR USUSARIO", JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(interfaz.class.getResource("/img/delete2.jpg")));
-                return;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "ERROR - El Usuario ingresado es erroneo");
-        imprimirMenuAdmin();
+                    "Ingrese el ID del usuario a borrar :",
+                    "BORRAR USUARIO",
+                    JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/cod.png")),
+                    null,
+                    null));
+            usuarios.borrarUsuario(idUsuario);
+            pregunta =  JOptionPane.showConfirmDialog(null, "Desea eliminar otro usuario?", "ELIMINAR USUARIO", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE, new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+        } while (pregunta == 0);
     }
 
     // Método que toma datos para modificar un producto del inventario.
@@ -497,6 +531,32 @@ public class interfaz {
                     null,
                     null));
             inventario.editarProducto(serialProductoAEditar);
+            resp = JOptionPane.showOptionDialog(
+                    null,
+                    "Desea Editar Otro Producto?",
+                    "CONFIRMACION",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/mas.png")),
+                    new Object[] { "SI", "NO" },
+                    "SI");
+        } while (resp == 0);
+
+    }
+
+    // Método que toma datos para modificar un producto NO PAR.
+    public void editarProductoNoPar() {
+        int resp ;
+        do {
+            int serialProductoAEditar = Integer.parseInt((String) JOptionPane.showInputDialog(
+                    null,
+                    "Ingrese el ID del producto que desea editar",
+                    "INGRESO DE DATOS",
+                    JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/cod.png")),
+                    null,
+                    null));
+            inventario.editarProductoNoPar(serialProductoAEditar);
             resp = JOptionPane.showOptionDialog(
                     null,
                     "Desea Editar Otro Producto?",
@@ -755,6 +815,8 @@ public class interfaz {
         } while (resp == 0);
 
     }
+
+
 
 }
 

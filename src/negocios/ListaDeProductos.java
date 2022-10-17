@@ -41,16 +41,11 @@ public class ListaDeProductos {
 
 
     // Metodo que borra productos del inventario.
-    public boolean borrarProducto(Integer idProducto) {
-        if (idProducto > 0) {
-            for (Producto producto : this.inventario) {
-                if (producto.getIdProducto() == idProducto) {
-                    inventario.remove(producto);
-                    return true;
-                }
-            }
+    public void borrarProducto(Integer idProducto) {
+        Producto p = this.buscarProducto(idProducto);
+        if(p != null){
+            inventario.remove(inventario.indexOf(p));
         }
-        return false;
     }
 
 
@@ -241,6 +236,26 @@ public class ListaDeProductos {
         for (Ticket t : registroVentas){
             JOptionPane.showMessageDialog(null, t);
         }
+    }
+
+    public void editarProductoNoPar(Integer idProducto){
+
+        for (Producto producto : this.inventario) {
+            if (producto.getIdProducto() == idProducto) {
+                if(!producto.getNivelDeToxi().equals("alto")) {
+                    producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
+                    producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
+                    producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
+                    producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
+                    JOptionPane.showMessageDialog(null, "Producto editado correctamente");
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No tiene permiso para esta acción");
+               return;
+            }
+        }
+        JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
     }
 
     // constructor

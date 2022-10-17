@@ -29,17 +29,26 @@ public class ListaDeUsuarios {
         }
     }
 
-
-    public boolean borrarUsuario(Integer id) {
-        if (id > 0) {
-            for (Usuario usuario : this.usuarios) {
-                if (usuario.getId() == id) {
-                    usuarios.remove(usuario);
-                    return true;
-                }
+    // Método que borra usuarios del sistema.
+    public void borrarUsuario(Integer id) {
+        Usuario u = this.buscarUsuario(id);
+        if (u != null){
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Estas seguro que deseas borrar este Usuario?",
+                    "Confirmacion",
+                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+            if( confirm == 0) {
+                usuarios.remove(usuarios.indexOf(u));
+                JOptionPane.showMessageDialog(
+                        null,
+                        " El Usuario se elimino correctamente ! ",
+                        "BORRAR USUARIO", JOptionPane.DEFAULT_OPTION,
+                        new ImageIcon(interfaz.class.getResource("/img/delete.png")));
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "ERROR - El Usuario ingresado es erroneo");
         }
-        return false;
     }
 
 
