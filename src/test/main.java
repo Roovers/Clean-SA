@@ -10,6 +10,5 @@ public class main {
         interfaz pantallaPrincipal = new interfaz();
 
     }
-    
-    
+
 }

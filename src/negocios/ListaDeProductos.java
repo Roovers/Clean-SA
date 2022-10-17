@@ -1,10 +1,13 @@
 package negocios;
 
 import IU.interfaz;
+import domain.ItemTicket;
 import domain.Producto;
+import domain.Ticket;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +15,8 @@ public class ListaDeProductos {
 
     // Lista que contiene los productos en inventario.
     ArrayList<Producto> inventario = new ArrayList<Producto>();
+
+    ArrayList<Ticket> registroVentas = new ArrayList<Ticket>();
 
 
     // Método que valida datos para agregar productos al inventario.
@@ -119,30 +124,6 @@ public class ListaDeProductos {
         }
     }
 
-
-    // Método para vender productos ( con validación ) .
-    public void venderUnProducto(Integer idProducto){
-        Producto producto = buscarProducto(idProducto);
-        if(producto != null) {
-            int cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad que desea vender del producto " + producto.getNombreDeProducto() + "\n" +
-                    "Actualmente hay " + producto.getCantidad() + " en stock "));
-            if(cantidad > 0){
-                if(cantidad > producto.getCantidad()){
-                    JOptionPane.showMessageDialog(null, "Cantidad insuficiente en el inventario!");
-                } else {
-                    producto.setCantidad(producto.getCantidad() - cantidad);
-                    JOptionPane.showMessageDialog(null, "Producto vendido exitosamente!");
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No podes vender 0 unidades de un producto!");
-                return;
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No podes vender un producto que no existe en el inventario!");
-        }
-    }
-
-
     // Método para consultar stock de productos .
     public void consultarStock(Integer idProducto){
         Producto p =  buscarProducto(idProducto);
@@ -210,6 +191,56 @@ public class ListaDeProductos {
         }
         JOptionPane.showMessageDialog(null, "El ID ingresado no correponde a ningun producto en el inventario");
         return;
+    }
+
+    public  void generarVenta(){
+        Ticket t = new Ticket(1,new ArrayList<ItemTicket>(), new Date());
+        int pregunta = 0;
+        ItemTicket i = new ItemTicket();
+        do {
+            i = null;
+            int codigoProducto = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto que desea vender", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/cod.png")), null, null));
+            Producto p = buscarProducto(codigoProducto);
+            if(p != null) {
+                int cantidad = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese la cantidad que desea vender del producto " + p.getNombreDeProducto() + "\n" +
+                                "Actualmente hay " + p.getCantidad() + " en stock", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
+                        new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
+                if (cantidad > 0){
+                    if(cantidad <= p.getCantidad()){
+                        p.setCantidad(p.getCantidad() - cantidad);
+                        i = new ItemTicket(p,cantidad);
+                        t.agregarProductoAlTicket(i);
+                        JOptionPane.showMessageDialog(null, " Producto Agregado Al ticket Exitosamernte", "PRODUCTO AGREGADO", JOptionPane.PLAIN_MESSAGE,
+                                new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
+                    } else {
+                        JOptionPane.showMessageDialog(null, " Cantidad insuficiente en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                                new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puedes vender 0 unidades de un producto!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                            new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes vender un producto que no existe en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
+            }
+            pregunta = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Desea agregar otro Producto al Ticket? \n 1 - SI \n 2 - NO", "AGREGAR PRODUCTO", JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/mas.png")), null, null));
+
+        } while (pregunta == 1 );
+        if(pregunta == 2){
+            t.calcularTotal();
+            registroVentas.add(t);
+            JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente!", "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/ok.png")));
+        }
+    }
+
+    public void verRegistroDeVentas(){
+        for (Ticket t : registroVentas){
+            JOptionPane.showMessageDialog(null, t);
+        }
     }
 
     // constructor

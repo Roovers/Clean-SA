@@ -101,8 +101,6 @@ public class ListaDeUsuarios {
     // Método de logeo y validación de datos.
     public Integer login() {
 
-        //String nombreUsuario = JOptionPane.showInputDialog("Ingrese su nombre de usuario ");
-
          String nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
                  new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
 
@@ -110,7 +108,7 @@ public class ListaDeUsuarios {
         int intentosUser = 0;
 
         Usuario u = findByUserName(nombreUsuario);
-        while (u == null && intentosUser < 3) {
+        while (u == null && intentosUser < 2) {
             JOptionPane.showMessageDialog(null, " El nombre de usuario es incorrecto ", "LOGIN", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/error.png")));
             nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
@@ -123,12 +121,12 @@ public class ListaDeUsuarios {
             String password = (String) JOptionPane.showInputDialog(null, "Ingrese su Clave de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
                     new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
 
-            while (!u.getPassword().equals(password) && intentosPass < 3) {
+            while (!u.getPassword().equals(password) && intentosPass < 2) {
                 password = (String) JOptionPane.showInputDialog(null, "Clave de Usuario incorrecta , vuelva a intentarlo :", "LOGIN", JOptionPane.DEFAULT_OPTION,
                         new ImageIcon(interfaz.class.getResource("/img/error.png")), null, null);
                 intentosPass++;
             }
-            if (intentosPass == 3) {
+            if (intentosPass == 2) {
                 JOptionPane.showMessageDialog(null, " Contacte con un Representante ", "LOGIN", JOptionPane.PLAIN_MESSAGE,
                         new ImageIcon(interfaz.class.getResource("/img/login.png")));
                 return 5;
