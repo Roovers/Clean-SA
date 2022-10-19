@@ -19,7 +19,6 @@ public class interfaz {
 
     // Selector de menú que corresponde a cada usuario.
     public void loginMenu() {
-
         switch (usuarios.login()) {
             case 0:
                 imprimirMenuAdmin();
@@ -292,7 +291,7 @@ public class interfaz {
     private void ingresarProducto() {
         int resp;
         do {
-            int idProducto = Integer.parseInt((String) JOptionPane.showInputDialog(
+           int idProducto = Integer.parseInt((String) JOptionPane.showInputDialog(
                     null,
                     "Ingrese el Codigo del prducto :",
                     "Ingreso De Datos",
@@ -338,7 +337,6 @@ public class interfaz {
                     new ImageIcon(interfaz.class.getResource("/img/toxi.png")),
                     null,
                     null);
-
 
             Producto producto = new Producto(idProducto, nombre, precio, detalle, cantidad, nivelDeToxicidad.toLowerCase());
 
@@ -406,48 +404,17 @@ public class interfaz {
                     new ImageIcon(interfaz.class.getResource("/img/all.png")),
                     null,
                     null));
-
-            switch (nivelDePermisos) {
-                case 0: Administrador a = new Administrador(idUsuario, nombre, password, nivelDePermisos);
-                    if (usuarios.addUser(a)) {
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                    }
-                    break;
-                case 1: EncargadoDeVentas encv = new EncargadoDeVentas(idUsuario, nombre, password, nivelDePermisos);
-                    if (usuarios.addUser(encv)) {
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                    }
-                    break;
-                case 2: EncargadoDeDeposito encd = new EncargadoDeDeposito(idUsuario, nombre, password, nivelDePermisos);
-                    if (usuarios.addUser(encd)) {
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                    }
-                    break;
-                case 3: EmpleadoDeVentas empv = new EmpleadoDeVentas(idUsuario, nombre, password, nivelDePermisos);
-                    if (usuarios.addUser(empv)) {
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                    }
-                    break;
-
-                case 4: EmpleadoDeDeposito empd = new EmpleadoDeDeposito(idUsuario, nombre, password, nivelDePermisos);
-                    if (usuarios.addUser(empd)) {
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                    }
-                    break;
-                default:
-                    System.out.println("Se eligio una opcion incorrecta volver a intentar");
-                    break;
+            Usuario u = new Usuario(idUsuario, nombre, password, nivelDePermisos);
+            if(nivelDePermisos < 5 && nivelDePermisos >= 0){
+                if (usuarios.addUser(u)) {
+                    JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
+                }
+            } else{
+                JOptionPane.showMessageDialog(null, "SE ELIGIO UNA OPCION INCORRECTA");
             }
+
             resp = JOptionPane.showOptionDialog(
                     null,
                     "Desea Agregar Otro Usuario?",
@@ -471,29 +438,7 @@ public class interfaz {
                     new ImageIcon(interfaz.class.getResource("/img/cod.png")),
                     null,
                     null));
-            if (inventario.buscarProducto(codigoProducto) != null) {
-                int confirm = JOptionPane.showConfirmDialog(
-                        null,
-                        "¿Estas seguro que deseas borrar este producto?",
-                        "Confirmacion",
-                        JOptionPane.YES_NO_OPTION);
-                if (confirm == 0) {
-                    inventario.borrarProducto(codigoProducto);
-                    JOptionPane.showMessageDialog(
-                            null,
-                            " El producto se elimino correctamente ! ",
-                            "BORRAR PRODUCTO",
-                            JOptionPane.PLAIN_MESSAGE,
-                            new ImageIcon(interfaz.class.getResource("/img/delete.png")));
-
-                }
-            } else {
-                JOptionPane.showMessageDialog(
-                        null,
-                        " ERROR - El código ingresado es erroneo ",
-                        "ERROR", JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
-            }
+                inventario.borrarProducto(codigoProducto);
             pregunta =  JOptionPane.showConfirmDialog(null, "Desea eliminar otro producto??", "ELIMINAR PRODUCTO", JOptionPane.YES_NO_OPTION,
                     JOptionPane.QUESTION_MESSAGE, new ImageIcon(interfaz.class.getResource("/img/delete.png")));
 
@@ -667,14 +612,14 @@ public class interfaz {
 
     // Método que se ejecuta en el main.
     public interfaz() {
-        sobrecargarInventario();
+       // sobrecargarInventario();
         sobrecargarUsuarios();
         loginMenu();
 
     }
 
     // Método que hardcodea el ingreso de productos al inventario.
-    public void sobrecargarInventario() {
+   /* public void sobrecargarInventario() {
         Producto p1 = new Producto(1, "JABON ALA PLUS", 500, "El mejor JABON de BS AS", 100, "BAJO");
         Producto p2 = new Producto(2, "TRAPO DE PISO FIMAX", 399, "Trapo de 90x90", 100, "BAJO");
         Producto p3 = new Producto(3, "Rejilla La Estrella", 500, "Rejilla economica", 100, "BAJO");
@@ -695,22 +640,22 @@ public class interfaz {
         inventario.addProducto(p8);
         inventario.addProducto(p9);
         inventario.addProducto(p10);
-    }
+    }*/
 
     // Método que hardcodea el alta de usuarios al sistema.
     public void sobrecargarUsuarios() {
-        Administrador admin1 = new Administrador(1, "admin", "admin", 0);
-        Administrador admin2 = new Administrador(6, "a", "a", 0);
-        EncargadoDeVentas encargado1 = new EncargadoDeVentas(2, "env", "123", 1);
-        EncargadoDeDeposito encargado2 = new EncargadoDeDeposito(3, "end", "123", 2);
-        EmpleadoDeVentas empleado1 = new EmpleadoDeVentas(4, "emv", "123", 3);
-        EmpleadoDeDeposito empleado2 = new EmpleadoDeDeposito(5, "emd", "123", 4);
-        usuarios.addUser(admin1);
-        usuarios.addUser(admin2);
-        usuarios.addUser(encargado1);
-        usuarios.addUser(encargado2);
-        usuarios.addUser(empleado1);
-        usuarios.addUser(empleado2);
+//        Usuario admin1 = new Usuario(1, "admin", "admin", 0);
+//        Usuario admin2 = new Usuario(6, "a", "a", 0);
+//        Usuario encargado1 = new Usuario(2, "env", "123", 1);
+//        Usuario encargado2 = new Usuario(3, "end", "123", 2);
+//        Usuario empleado1 = new Usuario(4, "emv", "123", 3);
+//        Usuario empleado2 = new Usuario(5, "emd", "123", 4);
+//        usuarios.addUser(admin1);
+//        usuarios.addUser(admin2);
+//        usuarios.addUser(encargado1);
+//        usuarios.addUser(encargado2);
+//        usuarios.addUser(empleado1);
+//        usuarios.addUser(empleado2);
     }
 
     // Método que muestra una lista de productos PAR.

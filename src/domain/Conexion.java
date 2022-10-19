@@ -5,19 +5,38 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexion {
-        Connection con ;
-        public void conectar() {
 
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
+        private static Connection con = null;
 
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_cleansa","root","");
-                JOptionPane.showMessageDialog(null, "se conecto");
-            } catch (Exception e) {
+        public static Connection getConnection(){
+            try{
+                if( con == null || con.isClosed() ){      // valida que la conexion no sea nula y que NO este cerrada
+                    Class.forName("com.mysql.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_cleansa","root","");
 
-                JOptionPane.showMessageDialog(null, "error al conectarse");
+                }
+                return con;
+            }catch(Exception e){
+                e.printStackTrace();
+                throw new RuntimeException();
             }
-
         }
+
+
+
+
+//        public void conectar() {
+//
+//            try {
+//                Class.forName("com.mysql.jdbc.Driver");
+//
+//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_cleansa","root","Jeronimo12");
+//                JOptionPane.showMessageDialog(null, "se conecto");
+//            } catch (Exception e) {
+//
+//                JOptionPane.showMessageDialog(null, "error al conectarse");
+//            }
+//
+//        }
 
 }

@@ -1,6 +1,7 @@
 package negocios;
 
 import IU.interfaz;
+import dao.UsuarioDAO;
 import domain.Producto;
 import domain.Usuario;
 
@@ -11,8 +12,9 @@ import java.util.List;
 public class ListaDeUsuarios {
 
     // Lista de usuarios.
-    List<Usuario> usuarios = new ArrayList<>();
+    List<Usuario> usuarios = new ArrayList<Usuario>( );
 
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
     public void listarUsuarios () {
         if (usuarios.size() > 0) {
             for (Usuario usuario : this.usuarios) {
@@ -39,7 +41,7 @@ public class ListaDeUsuarios {
                     "Confirmacion",
                     JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
             if( confirm == 0) {
-                usuarios.remove(usuarios.indexOf(u));
+                usuarioDAO.deleteUsuario(id);
                 JOptionPane.showMessageDialog(
                         null,
                         " El Usuario se elimino correctamente ! ",
@@ -60,7 +62,7 @@ public class ListaDeUsuarios {
                 arrLetras = usuario.getPassword().toCharArray();
                 if (arrLetras.length > 0 && arrLetras.length <= 20) {
                     if (usuario.getNivelPermisos() >= 0 && usuario.getNivelPermisos() <= 4) {
-                        usuarios.add(usuario);
+                        usuarioDAO.darDeAltaUsuario(usuario);
                         return true ;
                     }
                 }
@@ -72,27 +74,28 @@ public class ListaDeUsuarios {
     }
 
     public void editarUsuario(Integer idUsuario){
-
-        for (Usuario usuario : this.usuarios) {
-            if (usuario.getId() == idUsuario) {
-                usuario.setNombreDeUsuario(JOptionPane.showInputDialog("Ingresa el nombre", usuario.getNombreDeUsuario()));
-                usuario.setPassword(JOptionPane.showInputDialog("Ingresa la Clave", usuario.getPassword()));
-                usuario.setNivelPermisos(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el nivel de Permisos", usuario.getNivelPermisos())));
-                JOptionPane.showMessageDialog(null,"Usuario editado correctamente");
-                return;
-            }
+        Usuario usuario = buscarUsuario(idUsuario);
+        if( usuario != null){
+            usuario.setNombreDeUsuario(JOptionPane.showInputDialog("Ingresa el nombre", usuario.getNombreDeUsuario()));
+            usuario.setPassword(JOptionPane.showInputDialog("Ingresa la Clave", usuario.getPassword()));
+            usuario.setNivelPermisos(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el nivel de Permisos", usuario.getNivelPermisos())));
+            usuarioDAO.updateUsuario(usuario);
+            JOptionPane.showMessageDialog(null,"Se actualizo correctamente");
+            return;
         }
         JOptionPane.showMessageDialog(null,"No se encontro un usuario con el ID Ingresado");
+        return;
     }
 
 
     public Usuario buscarUsuario(Integer idUsuario){
-        for (Usuario usuario : this.usuarios) {
-            if (usuario.getId() == idUsuario) {
-                return usuario;
-            }
-        }
-        return null;
+//        for (Usuario usuario : this.usuarios) {
+//            if (usuario.getId() == idUsuario) {
+//                return usuario;
+//            }
+//        }
+//        return null;
+        return  usuarioDAO.buscarUsuarioPorId(idUsuario);
     }
 
 
@@ -112,17 +115,16 @@ public class ListaDeUsuarios {
 
          String nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
                  new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
-
         int intentosPass = 0;
         int intentosUser = 0;
 
-        Usuario u = findByUserName(nombreUsuario);
-        while (u == null && intentosUser < 2) {
+        Usuario u = usuarioDAO.buscarUsuarioPorUsername(nombreUsuario);
+        while (u == null && intentosUser <= 2) {
             JOptionPane.showMessageDialog(null, " El nombre de usuario es incorrecto ", "LOGIN", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/error.png")));
             nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
                     new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
-            u = findByUserName(nombreUsuario);
+            u = usuarioDAO.buscarUsuarioPorUsername(nombreUsuario);
             intentosUser++;
         }
         if (u != null) {
@@ -140,6 +142,11 @@ public class ListaDeUsuarios {
                         new ImageIcon(interfaz.class.getResource("/img/login.png")));
                 return 5;
             }
+            JOptionPane.showMessageDialog(null,
+                    "BIENVENIDO :" + " " + u.getNombreDeUsuario(),
+                    "SESION INICIADA", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/tick.gif")));
+           // JOptionPane.showMessageDialog(null,"BIENVENIDO" + "   " + u.getNombreDeUsuario());
             switch (u.getNivelPermisos()) {
                 case 0 : return 0;
                 case 1 : return 1;
@@ -156,7 +163,6 @@ public class ListaDeUsuarios {
         JOptionPane.showMessageDialog(null, "contacte a un administrador");
         return 5;
     }
-
 
     public ListaDeUsuarios() {
         this.usuarios = usuarios;

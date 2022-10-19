@@ -1,6 +1,7 @@
 package negocios;
 
 import IU.interfaz;
+import dao.ProductoDAO;
 import domain.ItemTicket;
 import domain.Producto;
 import domain.Ticket;
@@ -18,6 +19,8 @@ public class ListaDeProductos {
 
     ArrayList<Ticket> registroVentas = new ArrayList<Ticket>();
 
+    ProductoDAO productoDAO = new ProductoDAO();
+
 
     // Método que valida datos para agregar productos al inventario.
     public boolean addProducto(Producto producto) {
@@ -29,7 +32,7 @@ public class ListaDeProductos {
                     arrLetras = producto.getDetalle().toCharArray();
                     if (arrLetras.length > 5 && arrLetras.length < 200) {
                         if (producto.getPrecio() > 0) {
-                            inventario.add(producto);
+                            productoDAO.agregarProducto(producto);
                             return true;
                         }
                     }
@@ -43,58 +46,63 @@ public class ListaDeProductos {
     // Metodo que borra productos del inventario.
     public void borrarProducto(Integer idProducto) {
         Producto p = this.buscarProducto(idProducto);
-        if(p != null){
-            inventario.remove(inventario.indexOf(p));
+        if (p != null) {
+
+            int confirm = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Estas seguro que deseas borrar este Producto?",
+                    "Confirmacion",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (confirm == 0) {
+                productoDAO.deleteProducto(idProducto);
+                JOptionPane.showMessageDialog(
+                        null,
+                        " El Producto se elimino correctamente ! ",
+                        "BORRAR USUARIO", JOptionPane.DEFAULT_OPTION,
+                        new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+            }
+        }  else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    " ERROR - El código ingresado es erroneo ",
+                    "ERROR", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
         }
     }
 
 
     // Método que busca productos en el inventario.
     public Producto buscarProducto(Integer idProducto){
-        for (Producto p : this.inventario) {
-            if (p.getIdProducto() == idProducto) {
-                return p;
-            }
-        }
-        return null;
+    //    for (Producto p : this.inventario) {
+    //        if (p.getIdProducto() == idProducto) {
+    //            return p;
+    //        }
+    //    }
+    //    return null;
+        return productoDAO.buscarProductoPorId(idProducto);
     }
 
 
     // Método que modifica productos del inventario mediante ingreso de datos.
     public void editarProducto(Integer idProducto){
-
-        for (Producto producto : this.inventario) {
-            if (producto.getIdProducto() == idProducto) {
+            Producto producto = buscarProducto(idProducto);
+            if (producto != null) {
                 producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
                 producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
                 producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
                 producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
                 producto.setNivelDeToxi(JOptionPane.showInputDialog("Ingresa el nivel de toxicidad // ALTO o BAJO", producto.getNivelDeToxi()));
+                productoDAO.updateProducto(producto);
                 JOptionPane.showMessageDialog(null,"Producto editado correctamente");
                 return;
             }
-        }
         JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
-    }
-
+            return;
+        }
 
     // Método que imprime datos de productos ( con validación ).
     public void listarProductos () {
-        if (inventario.size() > 0) {
-            for (Producto p : this.inventario) {
-                JOptionPane.showMessageDialog(null, "P R O D U C T O " +
-                        "\n------------------------" +
-                        "\n Serial De Producto= " + p.getIdProducto() +
-                        "\n Nombre De Producto= " + p.getNombreDeProducto() +
-                        "\n Precio Del Producto= $" + p.getPrecio() +
-                        "\n Detalle Del Producto= " + p.getDetalle() +
-                        "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
-                        "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, " No hay productos en el inventario ! ", "I N V E N T A R I O", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/fail.png")));
-        }
+        productoDAO.findAllProducts();
     }
 
 

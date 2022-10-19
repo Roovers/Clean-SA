@@ -3,6 +3,8 @@ package domain;
 public class Producto {
 
     private Integer idProducto;
+
+    private Integer idDeposito;
     private String nombreDeProducto;
     private Integer precio;
     private String detalle;
@@ -69,14 +71,22 @@ public class Producto {
         this.nivelDeToxi = nivelDeToxi;
     }
 
+    public Integer getIdDeposito() {
+        return idDeposito;
+    }
+
+    public void setIdDeposito(Integer idDeposito) {
+        this.idDeposito = idDeposito;
+    }
+
     @Override
     public String toString() {
         return " P R O D U C T O " +
                 "\n-------------------" +
                 "\n Serial De Producto = " + idProducto +
-                " \n Nombre De Producto = " + nombreDeProducto +
-                " \n Precio Del Producto = $ " + precio +
-                " \n Detalle Del Producto = " + detalle +
+                "\n Nombre De Producto = " + nombreDeProducto +
+                "\n Precio Del Producto = $ " + precio +
+                "\n Detalle Del Producto = " + detalle +
                 "\n En stock = " + cantidad + " unidades" +
                 "\n Nivel De Toxicidad = " + nivelDeToxi  ;
     }
