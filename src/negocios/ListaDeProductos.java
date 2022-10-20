@@ -73,13 +73,11 @@ public class ListaDeProductos {
 
     // Método que busca productos en el inventario.
     public Producto buscarProducto(Integer idProducto){
-    //    for (Producto p : this.inventario) {
-    //        if (p.getIdProducto() == idProducto) {
-    //            return p;
-    //        }
-    //    }
-    //    return null;
-        return productoDAO.buscarProductoPorId(idProducto);
+        Producto p =   productoDAO.buscarProductoPorId(idProducto);
+        if( p != null ){
+            return p;
+        }
+        return null;
     }
 
 

@@ -405,28 +405,18 @@ public class interfaz {
                     null,
                     null));
             Usuario u = new Usuario(idUsuario, nombre, password, nivelDePermisos);
-            if(nivelDePermisos < 5 && nivelDePermisos >= 0){
-                if (usuarios.addUser(u)) {
-                    JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
-                }
-            } else{
-                JOptionPane.showMessageDialog(null, "SE ELIGIO UNA OPCION INCORRECTA");
-            }
-
-            resp = JOptionPane.showOptionDialog(
-                    null,
-                    "Desea Agregar Otro Usuario?",
-                    "CONFIRMACION",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/user+.png")),
-                    new Object[] { "SI", "NO" },
-                    "SI");
-        } while (resp == 0);
-
-    }
+                usuarios.addUser(u);
+                resp = JOptionPane.showOptionDialog(
+                        null,
+                        "Desea Agregar Otro Usuario?",
+                        "CONFIRMACION",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        new ImageIcon(interfaz.class.getResource("/img/user+.png")),
+                        new Object[]{"SI", "NO"},
+                        "SI");
+            } while (resp == 0) ;
+        }
 
     // Método que toma datos para borrar un producto del inventario.
     private void borrarProducto() {
@@ -612,51 +602,10 @@ public class interfaz {
 
     // Método que se ejecuta en el main.
     public interfaz() {
-       // sobrecargarInventario();
-        sobrecargarUsuarios();
         loginMenu();
-
     }
 
-    // Método que hardcodea el ingreso de productos al inventario.
-   /* public void sobrecargarInventario() {
-        Producto p1 = new Producto(1, "JABON ALA PLUS", 500, "El mejor JABON de BS AS", 100, "BAJO");
-        Producto p2 = new Producto(2, "TRAPO DE PISO FIMAX", 399, "Trapo de 90x90", 100, "BAJO");
-        Producto p3 = new Producto(3, "Rejilla La Estrella", 500, "Rejilla economica", 100, "BAJO");
-        Producto p4 = new Producto(4, "AROMATIZANTE ECOLOGICO GENIUS", 600, "Sabor a Frutilla", 100, "BAJO");
-        Producto p5 = new Producto(5, "Esponja Cuchurrumin", 140, "Color amarillo", 100, "BAJO");
-        Producto p6 = new Producto(6, "Naftalina HyperX", 450, "Es Multiuso", 10, "ALTO");
-        Producto p7 = new Producto(7, "Detergente Ala", 200, "Limpia todoo", 23, "ALTO");
-        Producto p8 = new Producto(8, "Lavandina", 173, "Para tunear la ropa", 65, "ALTO");
-        Producto p9 = new Producto(9, "Kerosene", 400, "Elimina los piojos", 8, "ALTO");
-        Producto p10 = new Producto(10, "Hidróxido de potasio", 200, "Para limpieza de Pinturas", 10, "ALTO");
-        inventario.addProducto(p1);
-        inventario.addProducto(p2);
-        inventario.addProducto(p3);
-        inventario.addProducto(p4);
-        inventario.addProducto(p5);
-        inventario.addProducto(p6);
-        inventario.addProducto(p7);
-        inventario.addProducto(p8);
-        inventario.addProducto(p9);
-        inventario.addProducto(p10);
-    }*/
 
-    // Método que hardcodea el alta de usuarios al sistema.
-    public void sobrecargarUsuarios() {
-//        Usuario admin1 = new Usuario(1, "admin", "admin", 0);
-//        Usuario admin2 = new Usuario(6, "a", "a", 0);
-//        Usuario encargado1 = new Usuario(2, "env", "123", 1);
-//        Usuario encargado2 = new Usuario(3, "end", "123", 2);
-//        Usuario empleado1 = new Usuario(4, "emv", "123", 3);
-//        Usuario empleado2 = new Usuario(5, "emd", "123", 4);
-//        usuarios.addUser(admin1);
-//        usuarios.addUser(admin2);
-//        usuarios.addUser(encargado1);
-//        usuarios.addUser(encargado2);
-//        usuarios.addUser(empleado1);
-//        usuarios.addUser(empleado2);
-    }
 
     // Método que muestra una lista de productos PAR.
     public void listarProductosPar() {
@@ -760,9 +709,6 @@ public class interfaz {
         } while (resp == 0);
 
     }
-
-
-
 }
 
 

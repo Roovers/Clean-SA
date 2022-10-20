@@ -56,6 +56,7 @@ public class ListaDeUsuarios {
 
     // Método que valida ingreso de datos.
     public boolean addUser(Usuario usuario) {
+
         if (usuario.getId() > 0) {
             char[] arrLetras = usuario.getNombreDeUsuario().toCharArray();
             if (arrLetras.length >= 1 && arrLetras.length < 20) {
@@ -63,11 +64,11 @@ public class ListaDeUsuarios {
                 if (arrLetras.length > 0 && arrLetras.length <= 20) {
                     if (usuario.getNivelPermisos() >= 0 && usuario.getNivelPermisos() <= 4) {
                         usuarioDAO.darDeAltaUsuario(usuario);
+                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
                         return true ;
                     }
                 }
             }
-
         }
         JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
         return false ;
