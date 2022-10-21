@@ -15,7 +15,7 @@ public class ProductoDAO {
     public Producto buscarProductoPorId(int idProd){
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.
-        String sql = "SELECT id_producto, nombre, precio, detalle, nivel_toxico, cantidad FROM producto WHERE id_producto = ?"; // query.
+        String sql = "SELECT id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock FROM producto WHERE id_producto = ?"; // query.
 
         try {
             Connection con = Conexion.getConnection();
@@ -44,7 +44,7 @@ public class ProductoDAO {
 
     public void agregarProducto( Producto p ){
         PreparedStatement pstmt = null;
-        String sql = "INSERT INTO bdd_cleansa.producto ( nombre, precio, detalle, nivel_toxico, cantidad, id_deposito) VALUES ( ? , ? , ? , ? , ?, 1); ";
+        String sql = "INSERT INTO bdd_cleansa.producto ( nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock, fk_deposito) VALUES ( ? , ? , ? , ? , ?, 1); ";
 
         try {
             Connection con = Conexion.getConnection();
@@ -56,9 +56,7 @@ public class ProductoDAO {
             pstmt.setInt(5, p.getCantidad());
             System.out.println(sql);
             int resultado =  pstmt.executeUpdate();
-            if( resultado == 1) {
-                JOptionPane.showMessageDialog(null, "Se ejecuto el insert bien");
-            }
+
             con.close();
         }catch(Exception e) {
             e.printStackTrace();
@@ -69,7 +67,7 @@ public class ProductoDAO {
 
     public void updateProducto( Producto p){
         PreparedStatement pstmt = null;
-        String sql = "UPDATE bdd_cleansa.producto SET nombre=?, precio=?, detalle=?, nivel_toxico=?, cantidad=? WHERE id_producto=?;";
+        String sql = "UPDATE bdd_cleansa.producto SET nombre_producto=?, precio=?, detalle_producto=?, nivel_toxicidad=?, cantidad_en_stock=? WHERE id_producto=?;";
         try {
 
             Connection con = Conexion.getConnection();
@@ -108,7 +106,7 @@ public class ProductoDAO {
     public void findAllProducts () {
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.
-        String sql = "SELECT * FROM producto "; // query.
+        String sql = "SELECT (id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock) FROM producto "; // query.
 
         try {
             Connection con = Conexion.getConnection();

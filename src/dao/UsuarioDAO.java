@@ -19,7 +19,7 @@ public class UsuarioDAO {
             pstmt = con.prepareStatement( sql );
             System.out.println(sql);
             pstmt.setInt(1, idUser);
-            rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
+            rs = pstmt.executeQuery();                // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
             Usuario u = null;
             if ( rs.next() ){                        // Lee los registros
                 u = new Usuario();
@@ -65,7 +65,7 @@ public class UsuarioDAO {
     }
     public void darDeAltaUsuario( Usuario u ){
         PreparedStatement pstmt = null;
-       String sql = "INSERT INTO bdd_cleansa.Usuario (nombre_usuario, password, nivel_permisos) VALUES (? , ?, ?); ";
+       String sql = "INSERT INTO bdd_cleansa.Usuario (nombre_usuario, password, nivel_permisos, fk_sector) VALUES (? , ?, ?, ?); ";
 
        try {
            Connection con = Conexion.getConnection();
@@ -73,11 +73,26 @@ public class UsuarioDAO {
            pstmt.setString( 1, u.getNombreDeUsuario());
            pstmt.setString(2, u.getPassword());
            pstmt.setInt(3, u.getNivelPermisos());
+           switch( u.getNivelPermisos() ){
+               case 0:
+                   pstmt.setInt(4, 2);
+                   break;
+               case 1:
+                   pstmt.setInt(4, 1);
+                   break;
+               case 2:
+                   pstmt.setInt(4, 3);
+                   break;
+               case 3:
+                   pstmt.setInt(4, 1);
+                   break;
+               case 4:
+                   pstmt.setInt(4, 3);
+                   break;
+               }
            System.out.println(sql);
           int resultado =  pstmt.executeUpdate();
-              if( resultado == 1) {
-                  JOptionPane.showMessageDialog(null, "Se ejecuto el insert bien");
-              }
+
               con.close();
        }catch(Exception e) {
             e.printStackTrace();
@@ -87,7 +102,7 @@ public class UsuarioDAO {
 
     public void updateUsuario( Usuario u){
         PreparedStatement pstmt = null;
-        String sql = "UPDATE bdd_cleansa.Usuario SET nombre_usuario=?, password=?, nivel_permisos=? WHERE id_usuario=?;";
+        String sql = "UPDATE bdd_cleansa.Usuario SET nombre_usuario=?, password=?, nivel_permisos=?,  fk_sector=? WHERE id_usuario=?;";
         try {
 
             Connection con = Conexion.getConnection();
@@ -95,7 +110,23 @@ public class UsuarioDAO {
             pstmt.setString(1, u.getNombreDeUsuario());
             pstmt.setString( 2, u.getPassword());
             pstmt.setInt(3, u.getNivelPermisos());
-            pstmt.setInt(4, u.getId());
+            pstmt.setInt(5, u.getId());
+            switch( u.getNivelPermisos() ){
+                case 0:
+                    pstmt.setInt(4, 2);
+                    break;
+                case 1:
+                    pstmt.setInt(4, 1);
+                case 2:
+                    pstmt.setInt(4, 3);
+                    break;
+                case 3:
+                    pstmt.setInt(4, 1);
+                    break;
+                case 4:
+                    pstmt.setInt(4, 3);
+                    break;
+            }
             int resultado = pstmt.executeUpdate();
             con.close();
         }catch ( Exception e ){

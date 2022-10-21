@@ -3,7 +3,6 @@ package domain;
 public class Producto {
 
     private Integer idProducto;
-
     private Integer idDeposito;
     private String nombreDeProducto;
     private Integer precio;

@@ -641,7 +641,7 @@ public class interfaz {
         } while (resp == 0);
     }
 
-    // Método que vende un prodcuto NO PAR mediante ingreso de datos.
+    // Método que vende un producto NO PAR mediante ingreso de datos.
     public void venderProductoComun(){
         int resp;
         do {
