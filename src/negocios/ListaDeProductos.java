@@ -7,10 +7,8 @@ import domain.Producto;
 import domain.Ticket;
 
 import javax.swing.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 public class ListaDeProductos {
 
@@ -195,7 +193,8 @@ public class ListaDeProductos {
     }
 
     public  void generarVenta(){
-        Ticket t = new Ticket(1,new ArrayList<ItemTicket>(), new Date());
+        Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
+        ;
         int pregunta = 0;
         ItemTicket i = new ItemTicket();
         do {
@@ -209,7 +208,8 @@ public class ListaDeProductos {
                         new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
                 if (cantidad > 0){
                     if(cantidad <= p.getCantidad()){
-                        p.setCantidad(p.getCantidad() - cantidad);
+//                        p.setCantidad(p.getCantidad() - cantidad);
+                        productoDAO.descontarStockPorVenta(p.getCantidad() - cantidad, p.getIdProducto());
                         i = new ItemTicket(p,cantidad);
                         t.agregarProductoAlTicket(i);
                         JOptionPane.showMessageDialog(null, " Producto Agregado Al ticket Exitosamernte", "PRODUCTO AGREGADO", JOptionPane.PLAIN_MESSAGE,
@@ -232,17 +232,22 @@ public class ListaDeProductos {
         } while (pregunta == 1 );
         if(pregunta == 2){
             t.calcularTotal();
-            registroVentas.add(t);
+           int resultado =  productoDAO.generarTicket(t);
+
+            for ( ItemTicket item : t.getListaProductos()){
+                productoDAO.hacerVenta(item, resultado);
+            }
+
             JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente!", "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/ok.png")));
         }
     }
 
-    public void verRegistroDeVentas(){
-        for (Ticket t : registroVentas){
-            JOptionPane.showMessageDialog(null, t);
-        }
-    }
+//    public void verRegistroDeVentas(){
+//        for (Ticket t : registroVentas){
+//            JOptionPane.showMessageDialog(null, t);
+//        }
+//    }
 
     public void editarProductoNoPar(Integer idProducto){
 
@@ -262,6 +267,17 @@ public class ListaDeProductos {
             }
         }
         JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
+    }
+
+    public void verRegistroVentas(){
+        List<Ticket> listaVentas = productoDAO.listarVentas();
+
+        for ( Ticket t : listaVentas ){
+            JOptionPane.showMessageDialog(null, t.getId());
+            JOptionPane.showMessageDialog(null, t.getFecha());
+            JOptionPane.showMessageDialog(null, t.getTotal());
+
+        }
     }
 
     // constructor

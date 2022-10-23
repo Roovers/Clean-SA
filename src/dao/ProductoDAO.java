@@ -1,16 +1,52 @@
 package dao;
 
-import domain.Conexion;
-import domain.Producto;
-import domain.Usuario;
+import domain.*;
 
 
 import javax.swing.*;
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ProductoDAO {
+
+
+    public List<Ticket> listarVentas( ){
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM Ticket;";
+        List<Ticket> lista = new ArrayList<Ticket>();
+        Ticket t = null;
+        try {
+            Connection con =  Conexion.getConnection();
+            pstmt = con.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while ( rs.next() ){
+
+                t.setId(rs.getInt( "id_ticket"));
+                t.setFecha(rs.getDate("fecha"));
+                t.setTotal(rs.getInt( "total"));
+                lista.add(t);
+            }
+
+        return lista;
+        } catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+
+
+
+    }
+
 
     public Producto buscarProductoPorId(int idProd){
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
@@ -20,22 +56,133 @@ public class ProductoDAO {
         try {
             Connection con = Conexion.getConnection();
             pstmt = con.prepareStatement( sql );
-            System.out.println(sql);
             pstmt.setInt(1, idProd);
             rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
             Producto p = null;
             if ( rs.next() ){                        // Lee los registros
                 p = new Producto();
                 p.setIdProducto( rs.getInt("id_producto"));
-                p.setNombreDeProducto(rs.getString("nombre"));
+                p.setNombreDeProducto(rs.getString("nombre_producto"));
                 p.setPrecio( rs.getInt("precio"));
-                p.setDetalle( rs.getString("detalle"));
-                p.setNivelDeToxi( rs.getString("nivel_toxico"));
-                p.setCantidad( rs.getInt("cantidad"));
+                p.setDetalle( rs.getString("detalle_producto"));
+                p.setNivelDeToxi( rs.getString("nivel_toxicidad"));
+                p.setCantidad( rs.getInt("cantidad_en_stock"));
             }            con.close();
 
             return  p;
         } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+    }
+
+    public int generarTicket( Ticket ticket ){
+        PreparedStatement pstmt = null;
+        String sql = "INSERT INTO bdd_cleansa.ticket ( fecha, total) VALUES ( ? , ? ); ";
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql, Statement.RETURN_GENERATED_KEYS );
+            pstmt.setString(1, ticket.getFecha().toString());
+            pstmt.setInt(2, ticket.getTotal());
+            int id = 0;
+            int resultado =  pstmt.executeUpdate();
+            ResultSet rs = pstmt.getGeneratedKeys();
+            if ( rs.next() ){
+                 id = rs.getInt(1);
+            }
+            return id;
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public void terminarVenta(Integer idTicket, Integer total){
+        PreparedStatement pstmt = null;
+        String sql = "UPDATE ticket SET total = ? WHERE id_ticket = ?";
+
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+
+            pstmt.setInt(1,total);
+            pstmt.setInt(2, idTicket);
+
+
+            int resultado =  pstmt.executeUpdate();
+
+            con.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+    public int consultarStockDeProducto( Integer idProducto ){
+        PreparedStatement pstmt = null;
+        String sql = "SELECT cantidad_en_stock FROM producto WHERE id_producto = ?";
+        ResultSet rs = null;
+        Integer stock = 0;
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+
+            pstmt.setInt(1,idProducto);
+
+
+
+             rs = pstmt.executeQuery();
+             if( rs.next() ){
+                 stock = rs.getInt("cantidad_en_stock");
+             }
+              con.close();
+
+             return stock;
+
+
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public void descontarStockPorVenta( Integer cantidad, Integer idProducto ){
+        PreparedStatement pstmt = null;
+        String sql = "UPDATE producto SET cantidad_en_stock = ? WHERE id_producto = ?";
+
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+
+            pstmt.setInt(1,cantidad);
+            pstmt.setInt(2, idProducto);
+
+
+            int resultado =  pstmt.executeUpdate();
+
+            con.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public void hacerVenta(ItemTicket venta, Integer idTicket){
+        PreparedStatement pstmt = null;
+        String sql = "INSERT INTO venta (fk_ticket, fk_producto) VALUES (?, ?)";
+
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+
+//            pstmt.setInt(1,idTicket);
+            pstmt.setInt(1, idTicket);
+            pstmt.setInt(2, venta.getProducto().getIdProducto());
+
+            int resultado =  pstmt.executeUpdate();
+
+            con.close();
+        }catch(Exception e) {
             e.printStackTrace();
             throw new RuntimeException();
         }
@@ -54,7 +201,6 @@ public class ProductoDAO {
             pstmt.setString(3, p.getDetalle());
             pstmt.setString(4, p.getNivelDeToxi());
             pstmt.setInt(5, p.getCantidad());
-            System.out.println(sql);
             int resultado =  pstmt.executeUpdate();
 
             con.close();
@@ -111,7 +257,6 @@ public class ProductoDAO {
         try {
             Connection con = Conexion.getConnection();
             pstmt = con.prepareStatement( sql );
-            System.out.println(sql);
             rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
             Producto p = null;
             while ( rs.next() ){                        // Lee los registros

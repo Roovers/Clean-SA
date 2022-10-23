@@ -211,7 +211,7 @@ public class interfaz {
                 inventario.generarVenta();
                 imprimirMenuEncargadoDeVentas();
             case 4:
-                inventario.verRegistroDeVentas();
+                inventario.verRegistroVentas();
                 imprimirMenuEncargadoDeVentas();
                 break;
             case 5:

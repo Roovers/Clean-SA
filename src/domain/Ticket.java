@@ -1,5 +1,7 @@
 package domain;
 
+import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -7,19 +9,28 @@ public class Ticket {
 
     private Integer id;
     private List<ItemTicket> listaProductos;
-    private Date fecha;
+    private LocalDate fecha;
     private int total;
+
+    private int idUsuario;
 
     public Ticket() {
     }
-
-    public Ticket(Integer id, List<ItemTicket> listaProductos, Date fecha) {
+    public Ticket(Integer id, List<ItemTicket> listaProductos) {
+        this.id = id;
+        this.listaProductos = listaProductos;
+    }
+    public Ticket(Integer id, List<ItemTicket> listaProductos, LocalDate fecha) {
         this.id = id;
         this.listaProductos = listaProductos;
         this.fecha = fecha;
         this.total = 0;
     }
-
+    public Ticket( List<ItemTicket> listaProductos, LocalDate fecha) {
+        this.listaProductos = listaProductos;
+        this.fecha = fecha;
+        this.total = 0;
+    }
     public int getTotal() {
         return total;
     }
@@ -45,12 +56,13 @@ public class Ticket {
     }
 
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
     public void setFecha(Date fecha) {
-        this.fecha = fecha;
+        this.fecha = LocalDate.now();
+
     }
 
     public void calcularTotal(){
@@ -59,6 +71,14 @@ public class Ticket {
 
     public void agregarProductoAlTicket(ItemTicket i){
         this.listaProductos.add(i);
+    }
+
+    public int getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override
