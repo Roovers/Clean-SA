@@ -98,26 +98,6 @@ public class ProductoDAO {
         }
     }
 
-    public void terminarVenta(Integer idTicket, Integer total){
-        PreparedStatement pstmt = null;
-        String sql = "UPDATE ticket SET total = ? WHERE id_ticket = ?";
-
-        try {
-            Connection con = Conexion.getConnection();
-            pstmt = con.prepareStatement( sql );
-
-            pstmt.setInt(1,total);
-            pstmt.setInt(2, idTicket);
-
-
-            int resultado =  pstmt.executeUpdate();
-
-            con.close();
-        }catch(Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
     public int consultarStockDeProducto( Integer idProducto ){
         PreparedStatement pstmt = null;
         String sql = "SELECT cantidad_en_stock FROM producto WHERE id_producto = ?";

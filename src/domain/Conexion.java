@@ -21,22 +21,4 @@ public class Conexion {
                 throw new RuntimeException();
             }
         }
-
-
-
-
-//        public void conectar() {
-//
-//            try {
-//                Class.forName("com.mysql.jdbc.Driver");
-//
-//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bdd_cleansa","root","Jeronimo12");
-//                JOptionPane.showMessageDialog(null, "se conecto");
-//            } catch (Exception e) {
-//
-//                JOptionPane.showMessageDialog(null, "error al conectarse");
-//            }
-//
-//        }
-
 }

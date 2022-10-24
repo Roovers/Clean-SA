@@ -208,7 +208,6 @@ public class ListaDeProductos {
                         new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
                 if (cantidad > 0){
                     if(cantidad <= p.getCantidad()){
-//                        p.setCantidad(p.getCantidad() - cantidad);
                         productoDAO.descontarStockPorVenta(p.getCantidad() - cantidad, p.getIdProducto());
                         i = new ItemTicket(p,cantidad);
                         t.agregarProductoAlTicket(i);
@@ -242,12 +241,6 @@ public class ListaDeProductos {
                     new ImageIcon(interfaz.class.getResource("/img/ok.png")));
         }
     }
-
-//    public void verRegistroDeVentas(){
-//        for (Ticket t : registroVentas){
-//            JOptionPane.showMessageDialog(null, t);
-//        }
-//    }
 
     public void editarProductoNoPar(Integer idProducto){
 
