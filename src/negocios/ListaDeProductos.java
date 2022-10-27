@@ -269,6 +269,7 @@ public class ListaDeProductos {
         }
     }
 
+<<<<<<< HEAD
     public  void generarVentaNoPar(){
         Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
                 ;
@@ -325,6 +326,8 @@ public class ListaDeProductos {
         }
     }
 
+=======
+>>>>>>> 6d6f425360034351b5d1d7396cee6dcee573096e
     public void editarProductoNoPar(Integer idProducto){
 
         for (Producto producto : this.inventario) {
