@@ -97,15 +97,25 @@ public class ListaDeProductos {
         }
 
     // Método que imprime datos de productos ( con validación ).
-    public void listarProductos () {
-        productoDAO.findAllProducts();
+    public void listarProductosNoPar () {
+        List<Producto> inventario = productoDAO.findAllNoParProducts();
+        inventario.forEach(p -> {
+            JOptionPane.showMessageDialog(null, "P R O D U C T O " +
+                    "\n------------------------" +
+                    "\n Serial De Producto= " + p.getIdProducto() +
+                    "\n Nombre De Producto= " + p.getNombreDeProducto() +
+                    "\n Precio Del Producto= $" + p.getPrecio() +
+                    "\n Detalle Del Producto= " + p.getDetalle() +
+                    "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
+                    "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
+        });
     }
-
 
     // Método que imprime datos de productos PAR ( con validación ).
     public void listarProductosPar () {
-        if (inventario.size() > 0) {
-            for (Producto p : this.inventario) {
+        List<Producto> inventarioPar = productoDAO.findAllParProducts();
+        if (inventarioPar.size() > 0) {
+            for (Producto p : inventarioPar) {
                 if (!p.getNivelDeToxi().equals( "bajo")) {
                     JOptionPane.showMessageDialog(null, "P R O D U C T O " +
                             "\n------------------------" +
@@ -163,33 +173,50 @@ public class ListaDeProductos {
 
 
     // Método que muestra stock de productos NO PAR en el inventario ( con validación ).
-    public void consultarStockProductoComun(Integer idProducto){
-        Producto p =  buscarProducto(idProducto);
+    public void consultarStockProductoComun(Integer idProducto){// ARMAR FOTOS
+        Producto p =  productoDAO.buscarProductoPorId(idProducto);
         if(p != null){
             if(!p.getNivelDeToxi().equalsIgnoreCase("alto")) {
                 JOptionPane.showMessageDialog(null, "El stock del producto " + p.getNombreDeProducto().toUpperCase() + "  es de " + p.getCantidad() + " Unidades ");
             } else{
-                JOptionPane.showMessageDialog(null,"No tienes los permisos necesarios para acceder al stock de este producto" );
+                JOptionPane.showMessageDialog(
+                        null,
+                        " ERROR - No tienes los permisos necesarios para consultar el stock de este producto. ",
+                        "ERROR", JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
             }
         } else {
-            JOptionPane.showMessageDialog(null,"No existe el producto con id " + idProducto + " en el inventario" );
+            JOptionPane.showMessageDialog(
+                    null,
+                    " ERROR - No existe el producto con el ID: "+p.getIdProducto()+" en el inventario",
+                    "ERROR", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
         }
     }
 
     // Método que busca productos NO PAR en el inventario ( con validación ).
-    public void buscarProductoComun(Integer idProducto){
-        for (Producto p : this.inventario) {
-            if (p.getIdProducto() == idProducto && p.getNivelDeToxi().equalsIgnoreCase("bajo")) {
-                JOptionPane.showMessageDialog(null, p);
-                return;
-            }
-            if (p.getIdProducto() == idProducto && p.getNivelDeToxi().equalsIgnoreCase("alto")) {
-                JOptionPane.showMessageDialog(null, "No tienes los permisos necesarios para acceder a la informacion de este producto");
-                return;
-            }
+    public void buscarProductoComun(Integer idProducto){ // FALTAN AGREGAR FOTOS
+        Producto p = productoDAO.buscarProductoPorId(idProducto);
+
+        if( p != null ){
+           if (p.getNivelDeToxi().equalsIgnoreCase("bajo")){
+               JOptionPane.showMessageDialog(null,p);
+               return;
+           }else {
+               JOptionPane.showMessageDialog(
+                       null,
+                       " ERROR - No tienes los permisos necesarios para acceder a la informacion de este producto. ",
+                       "ERROR", JOptionPane.PLAIN_MESSAGE,
+                       new ImageIcon(interfaz.class.getResource("/img/error.png")));
+               return;
+           }
+        }else {
+            JOptionPane.showMessageDialog(
+                    null,
+                    " ERROR - No existe el producto con el ID: "+p.getIdProducto()+" en el inventario",
+                    "ERROR", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
         }
-        JOptionPane.showMessageDialog(null, "El ID ingresado no correponde a ningun producto en el inventario");
-        return;
     }
 
     public  void generarVenta(){
@@ -208,7 +235,6 @@ public class ListaDeProductos {
                         new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
                 if (cantidad > 0){
                     if(cantidad <= p.getCantidad()){
-//                        p.setCantidad(p.getCantidad() - cantidad);
                         productoDAO.descontarStockPorVenta(p.getCantidad() - cantidad, p.getIdProducto());
                         i = new ItemTicket(p,cantidad);
                         t.agregarProductoAlTicket(i);
@@ -243,11 +269,61 @@ public class ListaDeProductos {
         }
     }
 
-//    public void verRegistroDeVentas(){
-//        for (Ticket t : registroVentas){
-//            JOptionPane.showMessageDialog(null, t);
-//        }
-//    }
+    public  void generarVentaNoPar(){
+        Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
+                ;
+        int pregunta = 0;
+        ItemTicket i = new ItemTicket();
+        do {
+            i = null;
+            int codigoProducto = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto que desea vender", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
+                    new ImageIcon(interfaz.class.getResource("/img/cod.png")), null, null));
+            Producto p = buscarProducto(codigoProducto);
+            if(p != null ) {
+                if (p.getNivelDeToxi().equals("bajo")) {
+
+                    int cantidad = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese la cantidad que desea vender del producto " + p.getNombreDeProducto() + "\n" +
+                                    "Actualmente hay " + p.getCantidad() + " en stock", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
+                            new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
+                    if (cantidad > 0) {
+                        if (cantidad <= p.getCantidad()) {
+                            productoDAO.descontarStockPorVenta(p.getCantidad() - cantidad, p.getIdProducto());
+                            i = new ItemTicket(p, cantidad);
+                            t.agregarProductoAlTicket(i);
+                            JOptionPane.showMessageDialog(null, " Producto Agregado Al ticket Exitosamernte", "PRODUCTO AGREGADO", JOptionPane.PLAIN_MESSAGE,
+                                    new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
+                        } else {
+                            JOptionPane.showMessageDialog(null, " Cantidad insuficiente en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No puedes vender 0 unidades de un producto!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                                new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "No tenes los permisos para vender unidades de este producto!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                            new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                }
+
+                pregunta = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Desea agregar otro Producto al Ticket? \n 1 - SI \n 2 - NO", "AGREGAR PRODUCTO", JOptionPane.DEFAULT_OPTION,
+                        new ImageIcon(interfaz.class.getResource("/img/mas.png")), null, null));
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes vender un producto que no existe en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
+                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
+            }
+        } while (pregunta == 1 );
+        if(pregunta == 2){
+            t.calcularTotal();
+            int resultado =  productoDAO.generarTicket(t);
+
+            for ( ItemTicket item : t.getListaProductos()){
+                productoDAO.hacerVenta(item, resultado);
+            }
+
+            JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente!", "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/ok.png")));
+        }
+    }
 
     public void editarProductoNoPar(Integer idProducto){
 
@@ -270,12 +346,18 @@ public class ListaDeProductos {
     }
 
     public void verRegistroVentas(){
-        List<Ticket> listaVentas = productoDAO.listarVentas();
-
+        List<Ticket> listaVentas = productoDAO.findAllTickets();
         for ( Ticket t : listaVentas ){
-            JOptionPane.showMessageDialog(null, t.getId());
-            JOptionPane.showMessageDialog(null, t.getFecha());
-            JOptionPane.showMessageDialog(null, t.getTotal());
+            t.setListaProductos(productoDAO.buscarVentasPorTickets(t.getId()));
+        }
+        for ( Ticket t : listaVentas ){
+            JOptionPane.showMessageDialog(null,
+                    "ID de la venta : " + t.getId() +
+                            "\nPRODUCTOS : " + t.getListaProductos()+
+                            "\nFECHA DE LA VENTA : " + t.getFecha() +
+                            "\nMONTO TOTAL : $ " + t.getTotal(),
+                    "TICKET", JOptionPane.PLAIN_MESSAGE,
+                    new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
 
         }
     }

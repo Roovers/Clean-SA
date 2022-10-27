@@ -147,7 +147,7 @@ public class ListaDeUsuarios {
                     "BIENVENIDO :" + " " + u.getNombreDeUsuario(),
                     "SESION INICIADA", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/tick.gif")));
-           // JOptionPane.showMessageDialog(null,"BIENVENIDO" + "   " + u.getNombreDeUsuario());
+
             switch (u.getNivelPermisos()) {
                 case 0 : return 0;
                 case 1 : return 1;

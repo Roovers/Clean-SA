@@ -18,6 +18,12 @@ public  class Usuario {
         this.nivelPermisos = nivelPermisos;
     }
 
+    public Usuario(String nombreDeUsuario, String password, Integer nivelPermisos) {
+        this.nombreDeUsuario = nombreDeUsuario;
+        this.password = password;
+        this.nivelPermisos = nivelPermisos;
+    }
+
 
     public Integer getId() {
         return id;

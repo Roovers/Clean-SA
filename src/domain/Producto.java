@@ -13,6 +13,19 @@ public class Producto {
     public Producto() {
     }
 
+    public Producto(String nombreDeProducto, Integer precio, String detalle, Integer cantidad, String nivelDeToxi) {
+        this.nombreDeProducto = nombreDeProducto;
+        this.precio = precio;
+        this.detalle = detalle;
+        this.cantidad = cantidad;
+        this.nivelDeToxi = nivelDeToxi;
+    }
+
+    public Producto(Integer idProducto, String nombreDeProducto) {
+        this.idProducto = idProducto;
+        this.nombreDeProducto = nombreDeProducto;
+    }
+
     public Producto(Integer idProducto, String nombreDeProducto, Integer precio, String detalle, Integer cantidad, String nivelDeToxi) {
         this.idProducto = idProducto;
         this.nombreDeProducto = nombreDeProducto;

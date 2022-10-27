@@ -291,14 +291,7 @@ public class interfaz {
     private void ingresarProducto() {
         int resp;
         do {
-           int idProducto = Integer.parseInt((String) JOptionPane.showInputDialog(
-                    null,
-                    "Ingrese el Codigo del prducto :",
-                    "Ingreso De Datos",
-                    JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/cod.png")),
-                    null,
-                    null));
+
 
             String nombre = (String) JOptionPane.showInputDialog(
                     null,
@@ -338,7 +331,7 @@ public class interfaz {
                     null,
                     null);
 
-            Producto producto = new Producto(idProducto, nombre, precio, detalle, cantidad, nivelDeToxicidad.toLowerCase());
+            Producto producto = new Producto(nombre, precio, detalle, cantidad, nivelDeToxicidad.toLowerCase());
 
             if (inventario.addProducto(producto)) {
                 JOptionPane.showMessageDialog(
@@ -374,14 +367,6 @@ public class interfaz {
 
         int resp;
         do {
-            int idUsuario = Integer.parseInt((String) JOptionPane.showInputDialog(
-                    null,
-                    "Ingrese el id del Usuario :",
-                    "Ingreso De Datos", JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/cod.png")),
-                    null,
-                    null));
-
             String nombre = (String) JOptionPane.showInputDialog(
                     null,
                     "Ingrese el nombre de Usuario:",
@@ -404,7 +389,7 @@ public class interfaz {
                     new ImageIcon(interfaz.class.getResource("/img/all.png")),
                     null,
                     null));
-            Usuario u = new Usuario(idUsuario, nombre, password, nivelDePermisos);
+            Usuario u = new Usuario(nombre, password, nivelDePermisos);
                 usuarios.addUser(u);
                 resp = JOptionPane.showOptionDialog(
                         null,
@@ -590,9 +575,13 @@ public class interfaz {
     }
 
     // Método que muestra una lista de los productos del inventario.
+    public void listarProductosNoPar() {
+        inventario.listarProductosNoPar();
+    }
+
     public void listarProductos() {
-        inventario.listarProductos();
-        imprimirMenuAdmin();
+        inventario.listarProductosNoPar();
+        inventario.listarProductosNoPar();
     }
 
     public void listarUsuarios() {
@@ -605,8 +594,6 @@ public class interfaz {
         loginMenu();
     }
 
-
-
     // Método que muestra una lista de productos PAR.
     public void listarProductosPar() {
         inventario.listarProductosPar();
@@ -616,6 +603,7 @@ public class interfaz {
     public void venderProducto() {
             inventario.generarVenta();
     }
+
     // Método que consulta stock de un prodcuto mediante ingreso de datos.
     public void consultarStock() {
         int resp;
@@ -643,20 +631,7 @@ public class interfaz {
 
     // Método que vende un producto NO PAR mediante ingreso de datos.
     public void venderProductoComun(){
-        int resp;
-        do {
-            int idProductoAVender = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el codigo del producto que desea vender"));
-            inventario.venderUnProductoComun(idProductoAVender);
-            resp = JOptionPane.showOptionDialog(
-                    null,
-                    "Desea Vender Otro Producto?",
-                    "CONFIRMACION",
-                    JOptionPane.YES_NO_CANCEL_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/mas.png")),
-                    new Object[] { "SI", "NO" },
-                    "SI");
-        } while (resp == 0);
+            inventario.generarVentaNoPar();
     }
 
     // Método que consulta stock de productos NO PAR.

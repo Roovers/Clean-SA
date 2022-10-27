@@ -36,7 +36,6 @@ public class UsuarioDAO {
         }
 
     }
-
     public Usuario buscarUsuarioPorUsername(String  userName){
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.
@@ -99,7 +98,6 @@ public class UsuarioDAO {
             throw new RuntimeException();
        }
     }
-
     public void updateUsuario( Usuario u){
         PreparedStatement pstmt = null;
         String sql = "UPDATE bdd_cleansa.Usuario SET nombre_usuario=?, password=?, nivel_permisos=?,  fk_sector=? WHERE id_usuario=?;";

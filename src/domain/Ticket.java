@@ -11,7 +11,6 @@ public class Ticket {
     private List<ItemTicket> listaProductos;
     private LocalDate fecha;
     private int total;
-
     private int idUsuario;
 
     public Ticket() {
@@ -80,6 +79,7 @@ public class Ticket {
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
+
 
     @Override
     public String toString() {

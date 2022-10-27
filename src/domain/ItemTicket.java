@@ -35,7 +35,8 @@ public class ItemTicket {
 
     @Override
     public String toString() {
-        return " I T E M  : " + producto.getNombreDeProducto() +  " Cantidad : " + cantidad ;
+        return " I T E M  : " + producto.getNombreDeProducto() +
+                " \nC A N T I D A D : " + cantidad ;
 
     }
 }
