@@ -155,7 +155,9 @@ public class interfaz {
 
         switch (opcion) {
             case 1:
-                ingresarProducto();
+//                ingresarProducto();
+                AgregarProducto form = new AgregarProducto(null);
+
                 imprimirMenuEncargadoDeDeposito();
                 break;
             case 2:
@@ -266,7 +268,7 @@ public class interfaz {
                 imprimirMenuEmpleadoDeDeposito();
                 break;
             case 2:
-                listarProductos();
+                listarProductosNoPar();
                 imprimirMenuEmpleadoDeDeposito();
                 break;
             case 3:
@@ -418,7 +420,7 @@ public class interfaz {
                     JOptionPane.QUESTION_MESSAGE, new ImageIcon(interfaz.class.getResource("/img/delete.png")));
 
         } while(pregunta == 0);
-        imprimirMenuAdmin();
+
     }
     // Método que toma datos para borrar un usuario del sistema.
     private void borrarUsuario() {
@@ -512,7 +514,7 @@ public class interfaz {
                     new Object[] { "SI", "NO" },
                     "SI");
         } while (resp == 0);
-        imprimirMenuAdmin();
+
     }
 
     // Método que busca productos mediante ingreso de datos.
@@ -581,12 +583,15 @@ public class interfaz {
 
     public void listarProductos() {
         inventario.listarProductosNoPar();
-        inventario.listarProductosNoPar();
+        inventario.listarProductosPar();
+    }
+    public void listarProductosPar() {
+        inventario.listarProductosPar();
     }
 
     public void listarUsuarios() {
         usuarios.listarUsuarios();
-        imprimirMenuAdmin();
+
     }
 
     // Método que se ejecuta en el main.
@@ -595,9 +600,7 @@ public class interfaz {
     }
 
     // Método que muestra una lista de productos PAR.
-    public void listarProductosPar() {
-        inventario.listarProductosPar();
-    }
+
 
     // Método que vende un prodcuto mediante ingreso de datos.
     public void venderProducto() {

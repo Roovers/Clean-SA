@@ -22,7 +22,7 @@ public class ListaDeProductos {
 
     // Método que valida datos para agregar productos al inventario.
     public boolean addProducto(Producto producto) {
-        if (producto.getIdProducto() > 0) {
+
             char[] arrLetras = producto.getNombreDeProducto().toCharArray();
             if (arrLetras.length >= 1 && arrLetras.length < 60) {
                 arrLetras = producto.getNivelDeToxi().toCharArray();
@@ -36,7 +36,7 @@ public class ListaDeProductos {
                     }
                 }
             }
-        }
+
         return false;
     }
 
@@ -135,6 +135,7 @@ public class ListaDeProductos {
 
     // Método para consultar stock de productos .
     public void consultarStock(Integer idProducto){
+        
         Producto p =  buscarProducto(idProducto);
         if(p != null){
             JOptionPane.showMessageDialog(null,"El stock del producto " + p.getNombreDeProducto().toUpperCase() + "  es de " + p.getCantidad() + " Unidades ");
@@ -269,7 +270,7 @@ public class ListaDeProductos {
         }
     }
 
-<<<<<<< HEAD
+
     public  void generarVentaNoPar(){
         Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
                 ;
@@ -326,26 +327,25 @@ public class ListaDeProductos {
         }
     }
 
-=======
->>>>>>> 6d6f425360034351b5d1d7396cee6dcee573096e
+
     public void editarProductoNoPar(Integer idProducto){
 
-        for (Producto producto : this.inventario) {
-            if (producto.getIdProducto() == idProducto) {
-                if(!producto.getNivelDeToxi().equals("alto")) {
-                    producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
-                    producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
-                    producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
-                    producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
-                    JOptionPane.showMessageDialog(null, "Producto editado correctamente");
-                    return;
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No tiene permiso para esta acción");
+       Producto producto = productoDAO.buscarProductoPorId(idProducto);
+       if( producto != null) {
+           if (!producto.getNivelDeToxi().equals("alto")) {
+               producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
+               producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
+               producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
+               producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
+               JOptionPane.showMessageDialog(null, "Producto editado correctamente");
+               productoDAO.updateProducto(producto);
                return;
-            }
-        }
-        JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
+           } else {
+               JOptionPane.showMessageDialog(null, "No tienes los permisos necesarios para actualizar este producto.");
+               return;
+           }
+       }
+       JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado.");
     }
 
     public void verRegistroVentas(){

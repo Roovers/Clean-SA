@@ -57,7 +57,7 @@ public class ListaDeUsuarios {
     // Método que valida ingreso de datos.
     public boolean addUser(Usuario usuario) {
 
-        if (usuario.getId() > 0) {
+
             char[] arrLetras = usuario.getNombreDeUsuario().toCharArray();
             if (arrLetras.length >= 1 && arrLetras.length < 20) {
                 arrLetras = usuario.getPassword().toCharArray();
@@ -69,7 +69,7 @@ public class ListaDeUsuarios {
                     }
                 }
             }
-        }
+
         JOptionPane.showMessageDialog(null, "ERROR , HAY DATOS INGRESADOS INVALIDOS.");
         return false ;
     }

@@ -222,76 +222,13 @@ public class ProductoDAO {
         }
     }
 
-    public List<Producto> findAllProducts () {
-        ArrayList<Producto> inventario = new ArrayList<>();
-        PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
-        ResultSet rs = null;                                // variable que guarda el resultadod e la query.
-        String sql = "SELECT (id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock) FROM producto "; // query.
-
-        try {
-            Connection con = Conexion.getConnection();
-            pstmt = con.prepareStatement( sql );
-            rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
-            Producto p = null;
-            while ( rs.next() ){                        // Lee los registros
-                p = new Producto();
-                p.setIdProducto( rs.getInt("id_producto"));
-                p.setNombreDeProducto(rs.getString("nombre"));
-                p.setPrecio( rs.getInt("precio"));
-                p.setDetalle( rs.getString("detalle"));
-                p.setNivelDeToxi( rs.getString("nivel_toxico"));
-                p.setCantidad( rs.getInt("cantidad"));
-                inventario.add(p);
-            }
-            con.close();
-            return inventario;
-
-        } catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
     public List<Producto> findAllParProducts () {
         ArrayList<Producto> inventario = new ArrayList<>();
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.
-        String sql = "SELECT (id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock) " +
+        String sql = "SELECT id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock " +
                 "FROM producto " +
-                "WHERE nivel_toxicidad = 'Alto' "; // query.
-
-        try {
-            Connection con = Conexion.getConnection();
-            pstmt = con.prepareStatement( sql );
-            rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
-            Producto p = null;
-            while ( rs.next() ){                        // Lee los registros
-                p = new Producto();
-                p.setIdProducto( rs.getInt("id_producto"));
-                p.setNombreDeProducto(rs.getString("nombre_producto"));
-                p.setPrecio( rs.getInt("precio"));
-                p.setDetalle( rs.getString("detalle_producto"));
-                p.setNivelDeToxi( rs.getString(" nivel_toxicidad"));
-                p.setCantidad( rs.getInt("cantidad_en_stock"));
-                inventario.add(p);
-            }
-            con.close();
-            return inventario;
-
-        } catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
-
-    public List<Producto> findAllNoParProducts () {
-        ArrayList<Producto> inventario = new ArrayList<>();
-        PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
-        ResultSet rs = null;                                // variable que guarda el resultadod e la query.
-        String sql = "SELECT (id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock) " +
-                "FROM producto " +
-                "WHERE nivel_toxicidad = 'Bajo' "; // query.
-
+                "WHERE nivel_toxicidad = 'alto' "; // query.
         try {
             Connection con = Conexion.getConnection();
             pstmt = con.prepareStatement( sql );
@@ -310,6 +247,36 @@ public class ProductoDAO {
             con.close();
             return inventario;
 
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+    }
+
+    public List<Producto> findAllNoParProducts () {
+        ArrayList<Producto> inventario = new ArrayList<>();
+        PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
+        ResultSet rs = null;                                // variable que guarda el resultadod e la query.
+        String sql = "SELECT id_producto, nombre_producto, detalle_producto, precio, cantidad_en_stock, nivel_toxicidad " +
+                "FROM producto "+
+                "WHERE nivel_toxicidad = 'bajo'"; // query.
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+            rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
+            Producto p = null;
+            while ( rs.next() ){                        // Lee los registros
+                p = new Producto();
+                p.setIdProducto( rs.getInt("id_producto"));
+                p.setNombreDeProducto(rs.getString("nombre_producto"));
+                p.setPrecio( rs.getInt("precio"));
+                p.setDetalle( rs.getString("detalle_producto"));
+                p.setNivelDeToxi( rs.getString("nivel_toxicidad"));
+                p.setCantidad( rs.getInt("cantidad_en_stock"));
+                inventario.add(p);
+            }
+            con.close();
+            return inventario;
         } catch (Exception e){
             e.printStackTrace();
             throw new RuntimeException();
