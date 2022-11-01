@@ -15,8 +15,9 @@ public class AgregarProducto extends JDialog {
     private JTextField txtDetalleProducto;
     private JTextField txtPrecio;
     private JTextField txtStock;
-    private JTextField txtNivelToxico;
+
     private JButton btnCancel;
+    private JComboBox opcionesNivelToxico;
 
     public  AgregarProducto(JFrame parent){
         super(parent);
@@ -26,7 +27,9 @@ public class AgregarProducto extends JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
+        String [] opciones = {"alto", "bajo"};
+        opcionesNivelToxico.addItem(opciones[0]);
+        opcionesNivelToxico.addItem(opciones[1]);
         btnAgregarProd.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,11 +51,11 @@ public class AgregarProducto extends JDialog {
         int precio = Integer.parseInt(txtPrecio.getText());
         String detalle = txtDetalleProducto.getText();
         int stock =Integer.parseInt(txtStock.getText());
-        String niveltoxi = txtNivelToxico.getText();
-
+        String niveltoxi = opcionesNivelToxico.getSelectedItem().toString();
         Producto p = new Producto(nombre,precio,detalle,stock,niveltoxi);
         if( l.addProducto(p) ){
             JOptionPane.showMessageDialog(null,"Agregado correctamente");
+            dispose();
         }else {
             JOptionPane.showMessageDialog(null, "Alguno de los campos es erroneo");
         }
@@ -60,7 +63,6 @@ public class AgregarProducto extends JDialog {
     }
     public void limpiarCampos(){
         txtDetalleProducto.setText("");
-        txtNivelToxico.setText("");
         txtStock.setText("");
         txtPrecio.setText("");
         txtNombreProducto.setText("");

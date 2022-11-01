@@ -80,20 +80,12 @@ public class ListaDeProductos {
 
 
     // Método que modifica productos del inventario mediante ingreso de datos.
-    public void editarProducto(Integer idProducto){
-            Producto producto = buscarProducto(idProducto);
-            if (producto != null) {
-                producto.setNombreDeProducto(JOptionPane.showInputDialog("Ingresa el nombre", producto.getNombreDeProducto()));
-                producto.setPrecio(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el precio", producto.getPrecio())));
-                producto.setDetalle(JOptionPane.showInputDialog("Ingresa el detalle", producto.getDetalle()));
-                producto.setCantidad(Integer.parseInt(JOptionPane.showInputDialog("Ingresa la cantidad en stock", producto.getCantidad())));
-                producto.setNivelDeToxi(JOptionPane.showInputDialog("Ingresa el nivel de toxicidad // ALTO o BAJO", producto.getNivelDeToxi()));
+    public void editarProducto(Producto producto){
+
                 productoDAO.updateProducto(producto);
                 JOptionPane.showMessageDialog(null,"Producto editado correctamente");
-                return;
-            }
-        JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado");
-            return;
+
+
         }
 
     // Método que imprime datos de productos ( con validación ).

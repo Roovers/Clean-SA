@@ -16,128 +16,32 @@ public class interfaz {
     static ListaDeUsuarios usuarios = new ListaDeUsuarios();
     // Lista de Ventas Registradas.
     private List<Ticket> registroVentas = new ArrayList<>();
-
     // Selector de menú que corresponde a cada usuario.
     public void loginMenu() {
-        switch (usuarios.login()) {
-            case 0:
-                imprimirMenuAdmin();
-                break;
-            case 1:
-                imprimirMenuEncargadoDeVentas();
-                break;
-            case 2:
-                imprimirMenuEncargadoDeDeposito();
-                break;
-            case 3:
-                imprimirMenuEmpleadoDeVentas();
-                break;
-            case 4:
-                imprimirMenuEmpleadoDeDeposito();
-                break;
-        }
+        LoginForm lf = new LoginForm(null);
+//            switch (lf.login()) {
+//                case 0:
+//                    MenuAdminForm adminForm = new MenuAdminForm(null);
+//                    break;
+//                case 1:
+//                    imprimirMenuEncargadoDeVentas();
+//                    break;
+//                case 2:
+//                    imprimirMenuEncargadoDeDeposito();
+//                    break;
+//                case 3:
+//                    imprimirMenuEmpleadoDeVentas();
+//                    break;
+//                case 4:
+//                    imprimirMenuEmpleadoDeDeposito();
+//                    break;
+//            }
     }
 
     // Método que imprime menú para administrador.
     public void imprimirMenuAdmin() { // MENU ADMIN GENERAL
-
-        int opcion = Integer.parseInt((String) JOptionPane.showInputDialog(
-                null,
-                " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B " +
-                        "\nPara acceder a la opcion ingrese el numero que corresponda " +
-                        "\n  \uD83D\uDD27\u200B  1 - Administrar Productos \n  \uD83D\uDD27\u200B  2 - Administrar Usuarios \n  ❌\u200B  3 - Cerrar Sesion ",
-                "Usuario : ADMINISTRADOR" ,
-                JOptionPane.DEFAULT_OPTION, new ImageIcon(interfaz.class.getResource("/img/admin.png")),
-                null,
-                null));
-
-        switch (opcion) {
-            case 1:     // MENU ADMIN PRODUCTOS
-                opcion = Integer.parseInt((String)(JOptionPane.showInputDialog(
-                        null,
-                        " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B " +
-                                "\nPara acceder a la opcion ingrese el numero que corresponda " +
-                                "\n  ➕  1 - Agregar un  Producto \n  \uD83D\uDD0E  2 - Consultar el Inventario  " +
-                                "\n  ❌\u200B  3 - Eliminar un Producto \n \uD83D\uDD04\u200B   4 - Editar un producto   " +
-                                "\n  \uD83D\uDD0E  5 - Buscar un Producto" + "\n  \u200B↩️\u200B  6 - Volver al Menu Principal" ,
-                        "\uD83D\uDD11\u200B Usuario : ADMINISTRADOR ",
-                        JOptionPane.DEFAULT_OPTION, new ImageIcon(interfaz.class.getResource("/img/admin.png")),
-                        null,
-                        null)));
-
-                switch (opcion) {
-                    case 1:
-                        ingresarProducto();
-                        break;
-                    case 2:
-                        listarProductos();
-                        break;
-                    case 3:
-                        borrarProducto();
-                        break;
-                    case 4:
-                        editarUnProducto();
-                        break;
-                    case 5:
-                        buscarProducto();
-                        break;
-                    case 6:
-                        imprimirMenuAdmin();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null,"Se eligio una opcion incorrecta volver a intentar");
-                        break;
-                }
-                imprimirMenuAdmin();
-
-            case 2:     // MENU ADMIN USUARIOS
-                opcion = Integer.parseInt((String) (JOptionPane.showInputDialog(
-                        null,
-                        " \u200B⛔\u200B A T E N C I O N \u200B⛔\u200B " +
-                        "\nPara acceder a la opcion ingrese el numero que corresponda " +
-                        "\n  ➕  1 - Dar de Alta un  Usuario \n  \uD83D\uDD0E  2 - Lista de Usuarios  " +
-                        "\n  ❌\u200B  3 - Dar de Baja un Usuario \n \uD83D\uDD04\u200B   4 - Editar un Usuario   " +
-                        "\n  \uD83D\uDD0E  5 - Buscar un Usuario" + "\n  \u200B↩️\u200B  6 - Volver al Menu Principal" ,
-                        "\uD83D\uDD11\u200B Usuario : ADMINISTRADOR ",
-                        JOptionPane.DEFAULT_OPTION, new ImageIcon(interfaz.class.getResource("/img/admin.png")),
-                        null,
-                        null)));
-
-                switch (opcion) {
-                    case 1:
-                        agregarUsuario();
-                        break;
-                    case 2:
-                        listarUsuarios();
-                        break;
-                    case 3:
-                        borrarUsuario();
-                        break;
-                    case 4:
-                        editarUnUsuario();
-                        break;
-                    case 5:
-                        buscarUsuario();
-                        break;
-                    case 6:
-                        imprimirMenuAdmin();
-                        break;
-
-                    default:
-                        JOptionPane.showMessageDialog(null,"Se eligio una opcion incorrecta volver a intentar");
-                        break;
-                }
-                imprimirMenuAdmin();
-
-            case 3:     // CERRAR SESION
-                loginMenu();
-                break;
-
-                default:
-                    JOptionPane.showMessageDialog(null,"Se eligio una opcion incorrecta volver a intentar");
-                break;
-        }
-        imprimirMenuAdmin();
+        MenuAdminForm menuAdmin = new MenuAdminForm(null);
+        loginMenu();
     }
 
     // Método que imprime menú para Encargado de Depósito.
@@ -157,7 +61,6 @@ public class interfaz {
             case 1:
 //                ingresarProducto();
                 AgregarProducto form = new AgregarProducto(null);
-
                 imprimirMenuEncargadoDeDeposito();
                 break;
             case 2:
@@ -169,7 +72,7 @@ public class interfaz {
                 imprimirMenuEncargadoDeDeposito();
                 break;
             case 4:
-                editarUnProducto();
+             //   editarUnProducto();//
                 imprimirMenuEncargadoDeDeposito();
                 break;
             case 5:
@@ -189,7 +92,6 @@ public class interfaz {
                 break;
         }
     }
-
     // Método que imprime menú para Encargado de Ventas.
     public void imprimirMenuEncargadoDeVentas() {
         int opcion = Integer.parseInt((String)(JOptionPane.showInputDialog(
@@ -293,8 +195,6 @@ public class interfaz {
     private void ingresarProducto() {
         int resp;
         do {
-
-
             String nombre = (String) JOptionPane.showInputDialog(
                     null,
                     "Ingrese el nombre del prducto :",
@@ -334,7 +234,6 @@ public class interfaz {
                     null);
 
             Producto producto = new Producto(nombre, precio, detalle, cantidad, nivelDeToxicidad.toLowerCase());
-
             if (inventario.addProducto(producto)) {
                 JOptionPane.showMessageDialog(
                         null,
@@ -441,7 +340,7 @@ public class interfaz {
     }
 
     // Método que toma datos para modificar un producto del inventario.
-    public void editarUnProducto() {
+/*    public void editarUnProducto() {
         int resp ;
         do {
             int serialProductoAEditar = Integer.parseInt((String) JOptionPane.showInputDialog(
@@ -465,7 +364,7 @@ public class interfaz {
         } while (resp == 0);
 
     }
-
+*/
     // Método que toma datos para modificar un producto NO PAR.
     public void editarProductoNoPar() {
         int resp ;

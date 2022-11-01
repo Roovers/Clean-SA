@@ -14,33 +14,6 @@ import java.util.List;
 
 public class ProductoDAO {
 
-
-   /* public List<Ticket> listarVentas( ){
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM Ticket;";
-        List<Ticket> lista = new ArrayList<Ticket>();
-        Ticket t = new Ticket();
-        try {
-            Connection con =  Conexion.getConnection();
-            pstmt = con.prepareStatement(sql);
-            rs = pstmt.executeQuery();
-
-            while ( rs.next() ){
-
-                t.setId(rs.getInt( "id_ticket"));
-                t.setFecha(rs.getDate("fecha"));
-                t.setTotal(rs.getInt( "total"));
-                lista.add(t);
-            }
-        return lista;
-        } catch(Exception e){
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }*/
-
-
     public Producto buscarProductoPorId(int idProd){
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.

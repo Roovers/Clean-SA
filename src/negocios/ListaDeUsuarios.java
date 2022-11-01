@@ -112,56 +112,22 @@ public class ListaDeUsuarios {
 
 
     // Método de logeo y validación de datos.
-    public Integer login() {
-
-         String nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
-                 new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
-        int intentosPass = 0;
-        int intentosUser = 0;
-
-        Usuario u = usuarioDAO.buscarUsuarioPorUsername(nombreUsuario);
-        while (u == null && intentosUser <= 2) {
-            JOptionPane.showMessageDialog(null, " El nombre de usuario es incorrecto ", "LOGIN", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
-            nombreUsuario = (String) JOptionPane.showInputDialog(null, "Ingrese su Nombre de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
-            u = usuarioDAO.buscarUsuarioPorUsername(nombreUsuario);
-            intentosUser++;
-        }
-        if (u != null) {
-
-            String password = (String) JOptionPane.showInputDialog(null, "Ingrese su Clave de Usuario :", "LOGIN", JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/login.png")), null, null);
-
-            while (!u.getPassword().equals(password) && intentosPass < 2) {
-                password = (String) JOptionPane.showInputDialog(null, "Clave de Usuario incorrecta , vuelva a intentarlo :", "LOGIN", JOptionPane.DEFAULT_OPTION,
-                        new ImageIcon(interfaz.class.getResource("/img/error.png")), null, null);
-                intentosPass++;
+    public Integer login(String nombreUsuario, String password) {
+        Usuario u = usuarioDAO.buscarUsuarioPorUsernameYPassword(nombreUsuario, password);
+            if( u != null ){
+                switch (u.getNivelPermisos()) {
+                    case 0 : return 0;
+                    case 1 : return 1;
+                    case 2 : return 2;
+                    case 3 : return 3;
+                    case 4 : return 4;
+                    /** return 0 = adminstrador
+                     return 1 = encargado ventas
+                     return 2 = encargado deposito
+                     return 3 = empleado ventas
+                     return 4 = empleado deposito **/
+                    }
             }
-            if (intentosPass == 2) {
-                JOptionPane.showMessageDialog(null, " Contacte con un Representante ", "LOGIN", JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(interfaz.class.getResource("/img/login.png")));
-                return 5;
-            }
-            JOptionPane.showMessageDialog(null,
-                    "BIENVENIDO :" + " " + u.getNombreDeUsuario(),
-                    "SESION INICIADA", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/tick.gif")));
-
-            switch (u.getNivelPermisos()) {
-                case 0 : return 0;
-                case 1 : return 1;
-                case 2 : return 2;
-                case 3 : return 3;
-                case 4 : return 4;
-                /** return 0 = adminstrador
-                 return 1 = encargado ventas
-                 return 2 = encargado deposito
-                 return 3 = empleado ventas
-                 return 4 = empleado deposito **/
-            }
-        }
-        JOptionPane.showMessageDialog(null, "contacte a un administrador");
         return 5;
     }
 
