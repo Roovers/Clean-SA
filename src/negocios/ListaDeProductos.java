@@ -42,10 +42,9 @@ public class ListaDeProductos {
 
 
     // Metodo que borra productos del inventario.
-    public void borrarProducto(Integer idProducto) {
+    public boolean borrarProducto(Integer idProducto) {
         Producto p = this.buscarProducto(idProducto);
         if (p != null) {
-
             int confirm = JOptionPane.showConfirmDialog(
                     null,
                     "¿Estas seguro que deseas borrar este Producto?",
@@ -53,19 +52,10 @@ public class ListaDeProductos {
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (confirm == 0) {
                 productoDAO.deleteProducto(idProducto);
-                JOptionPane.showMessageDialog(
-                        null,
-                        " El Producto se elimino correctamente ! ",
-                        "BORRAR USUARIO", JOptionPane.DEFAULT_OPTION,
-                        new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+                return true;
             }
-        }  else {
-            JOptionPane.showMessageDialog(
-                    null,
-                    " ERROR - El código ingresado es erroneo ",
-                    "ERROR", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/error.png")));
         }
+            return false;
     }
 
 
@@ -104,27 +94,46 @@ public class ListaDeProductos {
     }
 
     // Método que imprime datos de productos PAR ( con validación ).
-    public void listarProductosPar () {
-        List<Producto> inventarioPar = productoDAO.findAllParProducts();
-        if (inventarioPar.size() > 0) {
-            for (Producto p : inventarioPar) {
-                if (!p.getNivelDeToxi().equals( "bajo")) {
-                    JOptionPane.showMessageDialog(null, "P R O D U C T O " +
-                            "\n------------------------" +
-                            "\n Serial De Producto= " + p.getIdProducto() +
-                            "\n Nombre De Producto= " + p.getNombreDeProducto() +
-                            "\n Precio Del Producto= $" + p.getPrecio() +
-                            "\n Detalle Del Producto= " + p.getDetalle() +
-                            "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
-                            "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
-                }
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, " No hay productos en el inventario ! ", "I N V E N T A R I O", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/fail.png")));
-        }
+    public List<Producto> listarProductosPar () {
+        return productoDAO.findAllParProducts();
+//        if (inventarioPar.size() > 0) {
+//            for (Producto p : inventarioPar) {
+//                if (!p.getNivelDeToxi().equals( "bajo")) {
+//                    JOptionPane.showMessageDialog(null, "P R O D U C T O " +
+//                            "\n------------------------" +
+//                            "\n Serial De Producto= " + p.getIdProducto() +
+//                            "\n Nombre De Producto= " + p.getNombreDeProducto() +
+//                            "\n Precio Del Producto= $" + p.getPrecio() +
+//                            "\n Detalle Del Producto= " + p.getDetalle() +
+//                            "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
+//                            "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, " No hay productos en el inventario ! ", "I N V E N T A R I O", JOptionPane.PLAIN_MESSAGE,
+//                    new ImageIcon(interfaz.class.getResource("/img/fail.png")));
+//        }
     }
-
+    public List<Producto> listarProductos() {
+        return productoDAO.findAllProducts();
+//        if (inventarioPar.size() > 0) {
+//            for (Producto p : inventarioPar) {
+//                if (!p.getNivelDeToxi().equals( "bajo")) {
+//                    JOptionPane.showMessageDialog(null, "P R O D U C T O " +
+//                            "\n------------------------" +
+//                            "\n Serial De Producto= " + p.getIdProducto() +
+//                            "\n Nombre De Producto= " + p.getNombreDeProducto() +
+//                            "\n Precio Del Producto= $" + p.getPrecio() +
+//                            "\n Detalle Del Producto= " + p.getDetalle() +
+//                            "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
+//                            "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
+//                }
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(null, " No hay productos en el inventario ! ", "I N V E N T A R I O", JOptionPane.PLAIN_MESSAGE,
+//                    new ImageIcon(interfaz.class.getResource("/img/fail.png")));
+//        }
+    }
     // Método para consultar stock de productos .
     public void consultarStock(Integer idProducto){
         

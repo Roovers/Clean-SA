@@ -3,10 +3,11 @@
   <grid id="27dc6" binding="LoginPanel" layout-manager="GridLayoutManager" row-count="3" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="589" height="404"/>
+      <xy x="20" y="20" width="809" height="404"/>
     </constraints>
     <properties>
       <background color="-11974327"/>
+      <doubleBuffered value="true"/>
     </properties>
     <border type="none"/>
     <children>

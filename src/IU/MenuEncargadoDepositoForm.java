@@ -45,7 +45,19 @@ public class MenuEncargadoDepositoForm extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idProducto =Integer.parseInt(JOptionPane.showInputDialog(null,"Ingresa el id del producto que deseas eliminar"));
-                productosUtil.borrarProducto( idProducto );
+                if(productosUtil.borrarProducto( idProducto )){
+                    JOptionPane.showMessageDialog(
+                            null,
+                            " El Producto se elimino correctamente ! ",
+                            "BORRAR USUARIO", JOptionPane.DEFAULT_OPTION,
+                            new ImageIcon(interfaz.class.getResource("/img/delete.png")));
+                } else {
+                    JOptionPane.showMessageDialog(
+                            null,
+                            " ERROR - El código ingresado es erroneo ",
+                            "ERROR", JOptionPane.PLAIN_MESSAGE,
+                            new ImageIcon(interfaz.class.getResource("/img/error.png")));
+                };
             }
         });
         editarUnProductoButton.addActionListener(new ActionListener() {
@@ -73,7 +85,21 @@ public class MenuEncargadoDepositoForm extends JDialog{
                 }
             }
         });
-        setVisible(true);
 
+
+        consultarInventarioButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaProductos tabla = new TablaProductos(null,"todos");
+            }
+        });
+
+        listarProductosPARButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TablaProductos tabla = new TablaProductos(null,"PAR");
+            }
+        });
+        setVisible(true);
     }
 }
