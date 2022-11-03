@@ -30,7 +30,7 @@ public class MenuEncargadoDepositoForm extends JDialog{
         ingresarUnProductoAlButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AgregarProducto formAgregar = new AgregarProducto(null);
+                AgregarProducto formAgregar = new AgregarProducto(null,"encargado");
             }
         });
         cerrarSesionButton.addActionListener(new ActionListener() {
@@ -40,7 +40,6 @@ public class MenuEncargadoDepositoForm extends JDialog{
                 LoginForm lf = new LoginForm(null);
             }
         });
-
         borrarUnProductoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +63,6 @@ public class MenuEncargadoDepositoForm extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idProductoAEditar = Integer.parseInt( JOptionPane.showInputDialog( "Ingresa el id del producto que deseas editar" ) );
-
                 Producto p = productosUtil.buscarProducto(idProductoAEditar);
                 if( p!= null ){
                     String id = p.getIdProducto().toString();
@@ -73,7 +71,7 @@ public class MenuEncargadoDepositoForm extends JDialog{
                     Integer precio = p.getPrecio();
                     Integer stock = p.getCantidad();
                     String nivelToxico = p.getNivelDeToxi();
-                    EditarProducto editarProducto = new EditarProducto(null);
+                    EditarProducto editarProducto = new EditarProducto(null, "encargado");
                     editarProducto.setValues( new String[]{nombre,detalle,nivelToxico,stock.toString(),precio.toString(),id});
                     editarProducto.llenarCampos();
                     editarProducto.setVisible( true );
@@ -83,6 +81,7 @@ public class MenuEncargadoDepositoForm extends JDialog{
                 } else {
                     JOptionPane.showMessageDialog(null, "El producto no existe");
                 }
+
             }
         });
 

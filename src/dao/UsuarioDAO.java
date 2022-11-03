@@ -36,6 +36,34 @@ public class UsuarioDAO {
         }
 
     }
+    public Usuario buscarPorUsername(String username){
+        PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
+        ResultSet rs = null;                                // variable que guarda el resultadod e la query.
+        String sql = "SELECT id_usuario, nombre_usuario, password, nivel_permisos FROM Usuario WHERE nombre_usuario = ?"; // query.
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+            System.out.println(sql);
+            pstmt.setString(1, username);
+            rs = pstmt.executeQuery();                // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
+            Usuario u = null;
+            if ( rs.next() ){                        // Lee los registros
+                u = new Usuario();
+                u.setId( rs.getInt("id_usuario"));
+                u.setNombreDeUsuario(rs.getString("nombre_usuario"));
+                u.setPassword( rs.getString("password"));
+                u.setNivelPermisos( rs.getInt("nivel_permisos"));
+                System.out.println(u);
+            }            con.close();
+
+            return  u;
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+    }
+
     public Usuario buscarUsuarioPorUsernameYPassword(String  userName,String password){
         PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
         ResultSet rs = null;                                // variable que guarda el resultadod e la query.

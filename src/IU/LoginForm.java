@@ -55,6 +55,15 @@ public class LoginForm extends JDialog {
 
             }
         });
+
+        btnSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+
         setVisible(true);
 
     }

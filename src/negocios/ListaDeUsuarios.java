@@ -33,24 +33,7 @@ public class ListaDeUsuarios {
 
     // Método que borra usuarios del sistema.
     public void borrarUsuario(Integer id) {
-        Usuario u = this.buscarUsuario(id);
-        if (u != null){
-            int confirm = JOptionPane.showConfirmDialog(
-                    null,
-                    "¿Estas seguro que deseas borrar este Usuario?",
-                    "Confirmacion",
-                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
-            if( confirm == 0) {
-                usuarioDAO.deleteUsuario(id);
-                JOptionPane.showMessageDialog(
-                        null,
-                        " El Usuario se elimino correctamente ! ",
-                        "BORRAR USUARIO", JOptionPane.DEFAULT_OPTION,
-                        new ImageIcon(interfaz.class.getResource("/img/delete.png")));
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "ERROR - El Usuario ingresado es erroneo");
-        }
+        usuarioDAO.deleteUsuario(id);
     }
 
 
@@ -64,7 +47,6 @@ public class ListaDeUsuarios {
                 if (arrLetras.length > 0 && arrLetras.length <= 20) {
                     if (usuario.getNivelPermisos() >= 0 && usuario.getNivelPermisos() <= 4) {
                         usuarioDAO.darDeAltaUsuario(usuario);
-                        JOptionPane.showMessageDialog(null, "USUARIO DADO DE ALTA.");
                         return true ;
                     }
                 }
@@ -74,18 +56,8 @@ public class ListaDeUsuarios {
         return false ;
     }
 
-    public void editarUsuario(Integer idUsuario){
-        Usuario usuario = buscarUsuario(idUsuario);
-        if( usuario != null){
-            usuario.setNombreDeUsuario(JOptionPane.showInputDialog("Ingresa el nombre", usuario.getNombreDeUsuario()));
-            usuario.setPassword(JOptionPane.showInputDialog("Ingresa la Clave", usuario.getPassword()));
-            usuario.setNivelPermisos(Integer.parseInt(JOptionPane.showInputDialog("Ingresa el nivel de Permisos", usuario.getNivelPermisos())));
-            usuarioDAO.updateUsuario(usuario);
-            JOptionPane.showMessageDialog(null,"Se actualizo correctamente");
-            return;
-        }
-        JOptionPane.showMessageDialog(null,"No se encontro un usuario con el ID Ingresado");
-        return;
+    public void editarUsuario(Usuario u){
+        usuarioDAO.updateUsuario(u);
     }
 
 
@@ -99,18 +71,11 @@ public class ListaDeUsuarios {
         return  usuarioDAO.buscarUsuarioPorId(idUsuario);
     }
 
-
     // Método que recorre lista y busca usuarios.
-    public Usuario findByUserName (String nombreUsuario) {
-        for (Usuario usuario : usuarios) {
-            if (usuario.getNombreDeUsuario().equals(nombreUsuario)) {
-                return usuario;
-            }
-        }
-        return null;
+    public Usuario buscarUsuarioPorUsername(String username){
+
+        return usuarioDAO.buscarPorUsername( username );
     }
-
-
     // Método de logeo y validación de datos.
     public Integer login(String nombreUsuario, String password) {
         Usuario u = usuarioDAO.buscarUsuarioPorUsernameYPassword(nombreUsuario, password);

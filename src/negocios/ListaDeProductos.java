@@ -79,18 +79,8 @@ public class ListaDeProductos {
         }
 
     // Método que imprime datos de productos ( con validación ).
-    public void listarProductosNoPar () {
-        List<Producto> inventario = productoDAO.findAllNoParProducts();
-        inventario.forEach(p -> {
-            JOptionPane.showMessageDialog(null, "P R O D U C T O " +
-                    "\n------------------------" +
-                    "\n Serial De Producto= " + p.getIdProducto() +
-                    "\n Nombre De Producto= " + p.getNombreDeProducto() +
-                    "\n Precio Del Producto= $" + p.getPrecio() +
-                    "\n Detalle Del Producto= " + p.getDetalle() +
-                    "\n Cantidad en stock= " + p.getCantidad() + " unidades" +
-                    "\n Nivel De Toxicidad= " + p.getNivelDeToxi());
-        });
+    public List<Producto> listarProductosNoPar () {
+        return productoDAO.findAllNoParProducts();
     }
 
     // Método que imprime datos de productos PAR ( con validación ).
@@ -199,7 +189,6 @@ public class ListaDeProductos {
     // Método que busca productos NO PAR en el inventario ( con validación ).
     public void buscarProductoComun(Integer idProducto){ // FALTAN AGREGAR FOTOS
         Producto p = productoDAO.buscarProductoPorId(idProducto);
-
         if( p != null ){
            if (p.getNivelDeToxi().equalsIgnoreCase("bajo")){
                JOptionPane.showMessageDialog(null,p);

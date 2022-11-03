@@ -60,7 +60,7 @@ public class interfaz {
         switch (opcion) {
             case 1:
 //                ingresarProducto();
-                AgregarProducto form = new AgregarProducto(null);
+//                AgregarProducto form = new AgregarProducto(null);
                 imprimirMenuEncargadoDeDeposito();
                 break;
             case 2:
@@ -402,7 +402,7 @@ public class interfaz {
                     new ImageIcon(interfaz.class.getResource("/img/cod.png")),
                     null,
                     null));
-            usuarios.editarUsuario(idUsuarioAEditar);
+            //usuarios.editarUsuario(idUsuarioAEditar);
             resp = JOptionPane.showOptionDialog(
                     null,
                     "Desea Editar Otro Usuario?",

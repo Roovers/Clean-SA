@@ -18,25 +18,23 @@ public class MenuAdminForm extends JDialog {
         setMinimumSize(new Dimension(300, 400));
         setModal(true);
         setLocationRelativeTo(parent);
-
         btnAdministrarUsuarios.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdminUsersForm adminUsersForm = new AdminUsersForm(null);
-                dispose();
             }
         });
         btnAdministrarProductos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AdminProducstForm adminProducstForm = new AdminProducstForm(null);
-                dispose();
             }
         });
         btnCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                setVisible(false);
                 LoginForm lf = new LoginForm(null);
             }
         });

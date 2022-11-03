@@ -28,7 +28,7 @@ public class EditarProducto extends  JDialog {
         this.values = values;
     }
 
-    public EditarProducto(JFrame parent) {
+    public EditarProducto(JFrame parent, String cargo ) {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panelEditProducto);
@@ -36,8 +36,12 @@ public class EditarProducto extends  JDialog {
         setModal(true);
         setLocationRelativeTo(parent);
         String [] opciones = {"alto", "bajo"};
-        txtNivelToxico.addItem(opciones[0]);
-        txtNivelToxico.addItem(opciones[1]);
+        if( cargo.equalsIgnoreCase("encargado")) {
+            txtNivelToxico.addItem(opciones[0]);
+            txtNivelToxico.addItem(opciones[1]);
+        } else {
+            txtNivelToxico.addItem(opciones[1]);
+        }
         cancelarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="IU.AdminProducstForm">
-  <grid id="27dc6" binding="AdminProducstForm" layout-manager="GridLayoutManager" row-count="7" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="AdminProducstForm" layout-manager="GridLayoutManager" row-count="7" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="20" left="20" bottom="20" right="20"/>
     <constraints>
-      <xy x="20" y="20" width="500" height="417"/>
+      <xy x="20" y="20" width="842" height="970"/>
     </constraints>
     <properties>
       <background color="-11974327"/>
@@ -21,17 +21,17 @@
       </component>
       <component id="f0b2c" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="22" style="1"/>
           <foreground color="-1"/>
-          <text value="Aministrar "/>
+          <text value="Administrar "/>
         </properties>
       </component>
       <component id="a8e13" class="javax.swing.JButton" binding="agregarUnProductoButton" default-binding="true">
         <constraints>
-          <grid row="1" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="11"/>
@@ -49,11 +49,11 @@
       </component>
       <component id="e9966" class="javax.swing.JButton" binding="consultarUnProductoButton" default-binding="true">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="11"/>
-          <text value="Consultar un Producto"/>
+          <text value="Consultar stock de un Producto"/>
         </properties>
       </component>
       <component id="10738" class="javax.swing.JLabel">
@@ -67,7 +67,7 @@
       </component>
       <component id="1cf8f" class="javax.swing.JButton" binding="eliminarUnProductoButton" default-binding="true">
         <constraints>
-          <grid row="3" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="11"/>
@@ -76,7 +76,7 @@
       </component>
       <component id="528d0" class="javax.swing.JButton" binding="editarUnProductoButton" default-binding="true">
         <constraints>
-          <grid row="4" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="4" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="11"/>
@@ -85,7 +85,7 @@
       </component>
       <component id="dd1a1" class="javax.swing.JButton" binding="buscarUnProductoButton" default-binding="true">
         <constraints>
-          <grid row="5" column="1" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="1" row-span="1" col-span="5" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="11"/>
@@ -128,18 +128,9 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="5f877" class="javax.swing.JButton" binding="cerrarSesionButton" default-binding="true">
-        <constraints>
-          <grid row="6" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <font size="11"/>
-          <text value="Cerrar Sesion"/>
-        </properties>
-      </component>
       <component id="ee912" class="javax.swing.JLabel">
         <constraints>
-          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <font size="24" style="1"/>

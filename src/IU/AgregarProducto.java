@@ -19,7 +19,7 @@ public class AgregarProducto extends JDialog {
     private JButton btnCancel;
     private JComboBox opcionesNivelToxico;
 
-    public  AgregarProducto(JFrame parent){
+    public  AgregarProducto(JFrame parent, String cargo){
         super(parent);
         setTitle("Agregar un producto");
         setContentPane(panel1);
@@ -28,8 +28,12 @@ public class AgregarProducto extends JDialog {
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         String [] opciones = {"alto", "bajo"};
-        opcionesNivelToxico.addItem(opciones[0]);
-        opcionesNivelToxico.addItem(opciones[1]);
+        if ( cargo.equalsIgnoreCase("encargado") || cargo.equalsIgnoreCase("admin")){
+            opcionesNivelToxico.addItem(opciones[0]);
+            opcionesNivelToxico.addItem(opciones[1]);
+        } else {
+            opcionesNivelToxico.addItem(opciones[1]);
+        }
         btnAgregarProd.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
