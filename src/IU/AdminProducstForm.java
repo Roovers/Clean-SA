@@ -24,7 +24,7 @@ public class AdminProducstForm extends JDialog {
         super(parent);
         setTitle("ADMINISTRAR PRODUCTOS");
         setContentPane(AdminProducstForm);
-        setMinimumSize(new Dimension(450, 500));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
 

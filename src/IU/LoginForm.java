@@ -21,7 +21,7 @@ public class LoginForm extends JDialog {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(LoginPanel);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         btnIniciarSesion.addActionListener(new ActionListener() {

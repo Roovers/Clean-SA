@@ -21,7 +21,7 @@ public class AgregarUsuarioForm extends JDialog {
         super(parent);
         setTitle("AGREGAR USUARIOS");
         setContentPane(AgregarUsuarioForm);
-        setMinimumSize(new Dimension(450, 500));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
 

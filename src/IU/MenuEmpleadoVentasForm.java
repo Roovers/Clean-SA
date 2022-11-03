@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class MenuEmpleadoVentasForm extends JDialog {
     private JButton buscarUnProductoButton;
     private JButton hacerUnaVentaButton;
-    private JButton consultarStockButton;
+    private JButton consultarInventarioButton;
     private JPanel panelEmplVentas;
     private JButton cerrarSesionButton;
 
@@ -16,7 +16,7 @@ public class MenuEmpleadoVentasForm extends JDialog {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panelEmplVentas);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
 

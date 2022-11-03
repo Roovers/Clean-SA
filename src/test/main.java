@@ -13,6 +13,6 @@ public class main {
         //AgregarUsuarioForm agu = new AgregarUsuarioForm(null);
         //DeleteUser du = new DeleteUser(null);
        // MenuEmpleadoDepositoForm menuEmpleadoDepositoForm =  new MenuEmpleadoDepositoForm(null) ;
-
+//        MenuEncargadoVentasForm env = new MenuEncargadoVentasForm(null);
     }
 }

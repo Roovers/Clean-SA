@@ -32,7 +32,7 @@ public class EditarProducto extends  JDialog {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panelEditProducto);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         String [] opciones = {"alto", "bajo"};

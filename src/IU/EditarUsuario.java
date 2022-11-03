@@ -22,7 +22,7 @@ public class EditarUsuario extends JDialog {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panel);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         String [] opciones = {"Admin", "Encargado de Ventas","Encargado de Deposito","Empleado de Ventas","Empleado de Deposito"};

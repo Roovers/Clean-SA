@@ -20,7 +20,7 @@ public class MenuEmpleadoDepositoForm extends JDialog{
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panelEmplDeposito);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
 

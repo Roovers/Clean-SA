@@ -14,7 +14,7 @@ public class AgregarProducto extends JDialog {
     private JTextField txtNombreProducto;
     private JTextField txtDetalleProducto;
     private JTextField txtPrecio;
-    private JTextField txtStock;
+    private JTextField txtCantidadEnStock;
 
     private JButton btnCancel;
     private JComboBox opcionesNivelToxico;
@@ -23,7 +23,7 @@ public class AgregarProducto extends JDialog {
         super(parent);
         setTitle("Agregar un producto");
         setContentPane(panel1);
-        setMinimumSize(new Dimension(400, 400));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -54,7 +54,7 @@ public class AgregarProducto extends JDialog {
         String nombre = txtNombreProducto.getText();
         int precio = Integer.parseInt(txtPrecio.getText());
         String detalle = txtDetalleProducto.getText();
-        int stock =Integer.parseInt(txtStock.getText());
+        int stock =Integer.parseInt(txtCantidadEnStock.getText());
         String niveltoxi = opcionesNivelToxico.getSelectedItem().toString();
         Producto p = new Producto(nombre,precio,detalle,stock,niveltoxi);
         if( l.addProducto(p) ){
@@ -67,7 +67,7 @@ public class AgregarProducto extends JDialog {
     }
     public void limpiarCampos(){
         txtDetalleProducto.setText("");
-        txtStock.setText("");
+        txtCantidadEnStock.setText("");
         txtPrecio.setText("");
         txtNombreProducto.setText("");
     }

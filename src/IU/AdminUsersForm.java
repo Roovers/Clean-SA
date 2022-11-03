@@ -23,7 +23,7 @@ public class AdminUsersForm extends JDialog{
         super(parent);
         setTitle("ADMINISTRAR USUARIOS");
         setContentPane(AdminUsersForm);
-        setMinimumSize(new Dimension(450, 500));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
         agregarUsuarioButton.addActionListener(new ActionListener() {

@@ -23,7 +23,7 @@ public class MenuEncargadoDepositoForm extends JDialog{
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panelEncDeposito);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
 

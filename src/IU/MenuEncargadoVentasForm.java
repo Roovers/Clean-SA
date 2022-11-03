@@ -17,10 +17,9 @@ public class MenuEncargadoVentasForm extends JDialog {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(EncVentas);
-        setMinimumSize(new Dimension(600, 300));
+        setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
-
         cerrarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
