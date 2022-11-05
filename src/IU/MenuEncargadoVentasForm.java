@@ -1,5 +1,8 @@
 package IU;
 
+import domain.Producto;
+import negocios.ListaDeProductos;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,6 +15,8 @@ public class MenuEncargadoVentasForm extends JDialog {
     private JButton hacerUnaVentaButton;
     private JButton verRegistroDeVentasButton;
     private JButton cerrarSesionButton;
+
+    private ListaDeProductos productosUtil = new ListaDeProductos();
 
     public MenuEncargadoVentasForm(JFrame parent) {
         super(parent);
@@ -31,6 +36,25 @@ public class MenuEncargadoVentasForm extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 HacerVenta formVentas = new HacerVenta(null);
+            }
+        });
+        consultarStockButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idProducto = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del producto que desea consultar stock"));
+                productosUtil.consultarStock(idProducto);
+            }
+        });
+        buscarProductoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idProducto = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el id del producto que desea buscar"));
+                Producto p = productosUtil.buscarProducto(idProducto);
+                if(p != null){
+                    JOptionPane.showMessageDialog(null, p);
+                } else{
+                    JOptionPane.showMessageDialog(null, "El producto no esta en el inventario");
+                }
             }
         });
         setVisible(true);

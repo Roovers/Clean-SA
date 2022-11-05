@@ -63,11 +63,8 @@ public class ListaDeProductos {
     }
     // Método que busca productos en el inventario.
     public Producto buscarProducto(Integer idProducto){
-        Producto p =   productoDAO.buscarProductoPorId(idProducto);
-        if( p != null ){
-            return p;
-        }
-        return null;
+
+      return productoDAO.buscarProductoPorId(idProducto); // null o un Producto p
     }
 
 
@@ -128,7 +125,6 @@ public class ListaDeProductos {
     }
     // Método para consultar stock de productos .
     public void consultarStock(Integer idProducto){
-        
         Producto p =  buscarProducto(idProducto);
         if(p != null){
             JOptionPane.showMessageDialog(null,"El stock del producto " + p.getNombreDeProducto().toUpperCase() + "  es de " + p.getCantidad() + " Unidades ");
@@ -137,7 +133,6 @@ public class ListaDeProductos {
 
         }
     }
-
     public String[] listarNombres(){
         List<Producto> productos = productoDAO.findAllProducts();
        String [] nombres = new String[productos.size()];
@@ -232,7 +227,7 @@ public class ListaDeProductos {
                 productoDAO.descontarStockPorVenta(item.getProducto().getCantidad() - item.getCantidad(), item.getProducto().getIdProducto());
             }
 
-            JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente!", "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
+            JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente! \nTotal: $" + t.getTotal(), "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/ok.png")));
         }
 
