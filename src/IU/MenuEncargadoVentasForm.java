@@ -27,6 +27,12 @@ public class MenuEncargadoVentasForm extends JDialog {
                 LoginForm lf = new LoginForm(null);
             }
         });
+        hacerUnaVentaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                HacerVenta formVentas = new HacerVenta(null);
+            }
+        });
         setVisible(true);
     }
 }

@@ -62,6 +62,13 @@ public class HacerVenta extends  JDialog{
                 limpiarTabla();
             }
         });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carrito = new ArrayList<ItemTicket>();
+                dispose();
+            }
+        });
         setVisible(true);
     }
     public void llenarTabla(){
