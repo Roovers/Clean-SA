@@ -345,4 +345,34 @@ public class ProductoDAO {
             throw new RuntimeException();
         }
     }
+
+    public Producto buscarProductoPorNombre(String nombre){
+        PreparedStatement pstmt = null;                     // prepara la consulta antes de ejecutarla.
+        ResultSet rs = null;                                // variable que guarda el resultadod e la query.
+        String sql = "SELECT id_producto, nombre_producto, precio, detalle_producto, nivel_toxicidad, cantidad_en_stock FROM producto WHERE nombre_producto = ?"; // query.
+
+        try {
+            Connection con = Conexion.getConnection();
+            pstmt = con.prepareStatement( sql );
+            pstmt.setString(1, nombre);
+            rs = pstmt.executeQuery();                  // executeUpdate()  se usa solo para INSERT DELETE UPDATE ETC; // executeQuery() se usa para los SELECT;
+            Producto p = null;
+            if ( rs.next() ){                        // Lee los registros
+                p = new Producto();
+                p.setIdProducto( rs.getInt("id_producto"));
+                p.setNombreDeProducto(rs.getString("nombre_producto"));
+                p.setPrecio( rs.getInt("precio"));
+                p.setDetalle( rs.getString("detalle_producto"));
+                p.setNivelDeToxi( rs.getString("nivel_toxicidad"));
+                p.setCantidad( rs.getInt("cantidad_en_stock"));
+            }            con.close();
+
+            return  p;
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+    }
+
 }

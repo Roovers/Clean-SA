@@ -112,7 +112,7 @@ public class interfaz {
                 imprimirMenuEncargadoDeVentas();
                 break;
             case 3:
-                inventario.generarVenta();
+              //  inventario.generarVenta();
                 imprimirMenuEncargadoDeVentas();
             case 4:
                 inventario.verRegistroVentas();
@@ -503,7 +503,7 @@ public class interfaz {
 
     // Método que vende un prodcuto mediante ingreso de datos.
     public void venderProducto() {
-            inventario.generarVenta();
+         //   inventario.generarVenta();
     }
 
     // Método que consulta stock de un prodcuto mediante ingreso de datos.

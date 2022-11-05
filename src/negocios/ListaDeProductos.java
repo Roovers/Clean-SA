@@ -58,7 +58,9 @@ public class ListaDeProductos {
             return false;
     }
 
-
+    public Producto buscarPorNombre(String nombre){
+        return productoDAO.buscarProductoPorNombre(nombre);
+    }
     // Método que busca productos en el inventario.
     public Producto buscarProducto(Integer idProducto){
         Producto p =   productoDAO.buscarProductoPorId(idProducto);
@@ -136,6 +138,16 @@ public class ListaDeProductos {
         }
     }
 
+    public String[] listarNombres(){
+        List<Producto> productos = productoDAO.findAllProducts();
+       String [] nombres = new String[productos.size()];
+        int i = 0;
+        for ( Producto p : productos){
+            nombres[i] = p.getNombreDeProducto();
+            i++;
+        }
+        return nombres;
+    }
 
     // Método para vender productos NO PAR ( con validación ) .
     public void venderUnProductoComun(Integer idProducto){
@@ -210,56 +222,19 @@ public class ListaDeProductos {
         }
     }
 
-    public  void generarVenta(){
-        Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
-        ;
-        int pregunta = 0;
-        ItemTicket i = new ItemTicket();
-        do {
-            i = null;
-            int codigoProducto = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese el ID del producto que desea vender", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/cod.png")), null, null));
-            Producto p = buscarProducto(codigoProducto);
-            if(p != null) {
-                int cantidad = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Ingrese la cantidad que desea vender del producto " + p.getNombreDeProducto() + "\n" +
-                                "Actualmente hay " + p.getCantidad() + " en stock", "INGRESO DE DATOS", JOptionPane.DEFAULT_OPTION,
-                        new ImageIcon(interfaz.class.getResource("/img/cant.png")), null, null));
-                if (cantidad > 0){
-                    if(cantidad <= p.getCantidad()){
-                        productoDAO.descontarStockPorVenta(p.getCantidad() - cantidad, p.getIdProducto());
-                        i = new ItemTicket(p,cantidad);
-                        t.agregarProductoAlTicket(i);
-                        JOptionPane.showMessageDialog(null, " Producto Agregado Al ticket Exitosamernte", "PRODUCTO AGREGADO", JOptionPane.PLAIN_MESSAGE,
-                                new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
-                    } else {
-                        JOptionPane.showMessageDialog(null, " Cantidad insuficiente en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
-                                new ImageIcon(interfaz.class.getResource("/img/error.png")));
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes vender 0 unidades de un producto!", "ERROR", JOptionPane.PLAIN_MESSAGE,
-                            new ImageIcon(interfaz.class.getResource("/img/error.png")));
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No puedes vender un producto que no existe en el inventario!", "ERROR", JOptionPane.PLAIN_MESSAGE,
-                        new ImageIcon(interfaz.class.getResource("/img/error.png")));
-            }
-            pregunta = Integer.parseInt((String) JOptionPane.showInputDialog(null, "Desea agregar otro Producto al Ticket? \n 1 - SI \n 2 - NO", "AGREGAR PRODUCTO", JOptionPane.DEFAULT_OPTION,
-                    new ImageIcon(interfaz.class.getResource("/img/mas.png")), null, null));
 
-        } while (pregunta == 1 );
-        if(pregunta == 2){
-            t.calcularTotal();
+    public  void generarVenta(Ticket t){
+
            int resultado =  productoDAO.generarTicket(t);
 
             for ( ItemTicket item : t.getListaProductos()){
                 productoDAO.hacerVenta(item, resultado);
+                productoDAO.descontarStockPorVenta(item.getProducto().getCantidad() - item.getCantidad(), item.getProducto().getIdProducto());
             }
 
             JOptionPane.showMessageDialog(null, "Venta finalizada exitosamente!", "VENTA FINALIZADA", JOptionPane.PLAIN_MESSAGE,
                     new ImageIcon(interfaz.class.getResource("/img/ok.png")));
         }
-    }
-
 
     public  void generarVentaNoPar(){
         Ticket t = new Ticket(1, new ArrayList<ItemTicket>(), LocalDate.now())
