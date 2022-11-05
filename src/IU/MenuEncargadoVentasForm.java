@@ -1,8 +1,9 @@
 package IU;
 
 import domain.Producto;
+import domain.Ticket;
 import negocios.ListaDeProductos;
-
+import java.util.List;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +36,7 @@ public class MenuEncargadoVentasForm extends JDialog {
         hacerUnaVentaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                HacerVenta formVentas = new HacerVenta(null);
+                HacerVenta formVentas = new HacerVenta(null,"encargado");
             }
         });
         consultarStockButton.addActionListener(new ActionListener() {
@@ -54,6 +55,21 @@ public class MenuEncargadoVentasForm extends JDialog {
                     JOptionPane.showMessageDialog(null, p);
                 } else{
                     JOptionPane.showMessageDialog(null, "El producto no esta en el inventario");
+                }
+            }
+        });
+        verRegistroDeVentasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Ticket> listaVentas =  productosUtil.verRegistroVentas();
+                for ( Ticket t : listaVentas ){
+                    JOptionPane.showMessageDialog(null,
+                            "ID de la venta : " + t.getId() +
+                                    "\nPRODUCTOS : " + t.getListaProductos()+
+                                    "\nFECHA DE LA VENTA : " + t.getFecha() +
+                                    "\nMONTO TOTAL : $ " + t.getTotal(),
+                            "TICKET", JOptionPane.PLAIN_MESSAGE,
+                            new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
                 }
             }
         });

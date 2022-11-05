@@ -12,8 +12,6 @@ import java.util.ArrayList;
 public class TablaProductos extends  JDialog {
     private JPanel panel1;
     private JTable tabla;
-
-
     private ListaDeProductos productosUtil = new ListaDeProductos();
     public TablaProductos (JFrame parent, String categoria) {
         super(parent);

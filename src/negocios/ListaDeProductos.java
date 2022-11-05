@@ -133,15 +133,29 @@ public class ListaDeProductos {
 
         }
     }
-    public String[] listarNombres(){
-        List<Producto> productos = productoDAO.findAllProducts();
-       String [] nombres = new String[productos.size()];
-        int i = 0;
-        for ( Producto p : productos){
-            nombres[i] = p.getNombreDeProducto();
-            i++;
+    public String[] listarNombres(String categoria){
+        if (categoria.equalsIgnoreCase("todos")){
+            List<Producto> productosTodos = productoDAO.findAllProducts();
+            String [] nombres = new String[productosTodos.size()];
+            int i = 0;
+            for ( Producto p : productosTodos){
+                nombres[i] = p.getNombreDeProducto();
+                i++;
+            }
+            return nombres;
+        } else {
+            List<Producto> productosNoPar = productoDAO.findAllNoParProducts();
+            String [] nombres = new String[productosNoPar.size()];
+            int i = 0;
+            for ( Producto p : productosNoPar){
+                nombres[i] = p.getNombreDeProducto();
+                System.out.println(nombres[i]);
+                i++;
+            }
+            return nombres;
         }
-        return nombres;
+
+
     }
 
     // Método para vender productos NO PAR ( con validación ) .
@@ -308,21 +322,12 @@ public class ListaDeProductos {
        JOptionPane.showMessageDialog(null,"No se encontro un producto con el serial ingresado.");
     }
 
-    public void verRegistroVentas(){
+    public List<Ticket> verRegistroVentas(){
         List<Ticket> listaVentas = productoDAO.findAllTickets();
         for ( Ticket t : listaVentas ){
             t.setListaProductos(productoDAO.buscarVentasPorTickets(t.getId()));
         }
-        for ( Ticket t : listaVentas ){
-            JOptionPane.showMessageDialog(null,
-                    "ID de la venta : " + t.getId() +
-                            "\nPRODUCTOS : " + t.getListaProductos()+
-                            "\nFECHA DE LA VENTA : " + t.getFecha() +
-                            "\nMONTO TOTAL : $ " + t.getTotal(),
-                    "TICKET", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
-
-        }
+        return listaVentas;
     }
 
     // constructor

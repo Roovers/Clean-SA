@@ -25,19 +25,25 @@ public class HacerVenta extends  JDialog{
     private JPanel panel;
 
     private List<ItemTicket> carrito = new ArrayList<ItemTicket>();
-
     private final ListaDeProductos productosUtil = new ListaDeProductos();
 
-    public HacerVenta (JFrame parent) {
+    public HacerVenta (JFrame parent, String cargo) {
         super(parent);
         setTitle("INICIAR SESION");
         setContentPane(panel);
         setMinimumSize(new Dimension(600, 500));
         setModal(true);
         setLocationRelativeTo(parent);
-        String [] nombres = productosUtil.listarNombres();
-        for(int i = 0; i< nombres.length;i++){
-            comboBox1.addItem(nombres[i]);
+        if(cargo.equalsIgnoreCase("encargado")) {
+            String[] nombres = productosUtil.listarNombres("todos");
+            for (int i = 0; i < nombres.length; i++) {
+                comboBox1.addItem(nombres[i]);
+            }
+        }else {
+            String[] nombres = productosUtil.listarNombres("noPar");
+            for (int i = 0; i < nombres.length; i++) {
+                comboBox1.addItem(nombres[i]);
+            }
         }
         agregarAlTicketButton.addActionListener(new ActionListener() {
             @Override
