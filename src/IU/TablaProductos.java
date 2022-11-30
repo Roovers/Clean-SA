@@ -14,12 +14,7 @@ public class TablaProductos extends  JDialog {
     private JTable tabla;
     private ListaDeProductos productosUtil = new ListaDeProductos();
     public TablaProductos (JFrame parent, String categoria) {
-        super(parent);
-        setTitle("INICIAR SESION");
-       setContentPane(panel1);
-       setMinimumSize(new Dimension(600, 500));
-        setModal(true);
-        setLocationRelativeTo(parent);
+
         if( categoria.equalsIgnoreCase("todos")){
             llenarTablaTodos();
         } else if( categoria.equalsIgnoreCase("PAR")){
@@ -28,7 +23,6 @@ public class TablaProductos extends  JDialog {
             llenarTablaNoPar();
         }
         setVisible(true);
-
     }
     void llenarTablaTodos() {
         String[]headers = {"ID","NOMBRE","DETALLE","PRECIO","STOCK","NIVEL TOXICO"};

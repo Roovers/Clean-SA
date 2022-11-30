@@ -61,16 +61,7 @@ public class MenuEncargadoVentasForm extends JDialog {
         verRegistroDeVentasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Ticket> listaVentas =  productosUtil.verRegistroVentas();
-                for ( Ticket t : listaVentas ){
-                    JOptionPane.showMessageDialog(null,
-                            "ID de la venta : " + t.getId() +
-                                    "\nPRODUCTOS : " + t.getListaProductos()+
-                                    "\nFECHA DE LA VENTA : " + t.getFecha() +
-                                    "\nMONTO TOTAL : $ " + t.getTotal(),
-                            "TICKET", JOptionPane.PLAIN_MESSAGE,
-                            new ImageIcon(interfaz.class.getResource("/img/ticket.png")));
-                }
+            TablaVentas tablaVentas = new TablaVentas(null);
             }
         });
         setVisible(true);

@@ -6,6 +6,6 @@ import negocios.ListaDeProductos;
 
 public class main {
     public static void main(String[] args) {
-    interfaz i = new interfaz();
+  interfaz i = new interfaz();
     }
 }

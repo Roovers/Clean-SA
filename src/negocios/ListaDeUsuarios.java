@@ -12,24 +12,8 @@ import java.util.List;
 public class ListaDeUsuarios {
 
     // Lista de usuarios.
-    List<Usuario> usuarios = new ArrayList<Usuario>( );
 
     UsuarioDAO usuarioDAO = new UsuarioDAO();
-    public void listarUsuarios () {
-        if (usuarios.size() > 0) {
-            for (Usuario usuario : this.usuarios) {
-                JOptionPane.showMessageDialog(null, "U S U A R I O  " +
-                        "\n------------------------" +
-                        "\n ID De Usuario = " + usuario.getId() +
-                        "\n Nombre De Usuario = " + usuario.getNombreDeUsuario() +
-                        "\n Password Del Usuario = " + usuario.getPassword() +
-                        "\n Nivel de Permisos = " + usuario.getNivelPermisos());
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, " No hay productos en el inventario ! ", "I N V E N T A R I O", JOptionPane.PLAIN_MESSAGE,
-                    new ImageIcon(interfaz.class.getResource("/img/fail.png")));
-        }
-    }
 
     // Método que borra usuarios del sistema.
     public void borrarUsuario(Integer id) {
@@ -94,17 +78,5 @@ public class ListaDeUsuarios {
                     }
             }
         return 5;
-    }
-
-    public ListaDeUsuarios() {
-        this.usuarios = usuarios;
-    }
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
     }
 }

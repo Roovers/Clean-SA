@@ -42,7 +42,6 @@ public class AdminProducstForm extends JDialog {
                 productosUtil.consultarStock( idProducto );
             }
         });
-
         eliminarUnProductoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

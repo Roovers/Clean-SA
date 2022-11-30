@@ -12,10 +12,6 @@ import java.util.*;
 
 public class ListaDeProductos {
 
-    // Lista que contiene los productos en inventario.
-    ArrayList<Producto> inventario = new ArrayList<Producto>();
-
-    ArrayList<Ticket> registroVentas = new ArrayList<Ticket>();
 
     ProductoDAO productoDAO = new ProductoDAO();
 
@@ -331,8 +327,6 @@ public class ListaDeProductos {
     }
 
     // constructor
-    public ArrayList<Producto> getInventario() {
-        return inventario;
-    }
+
 }
 
